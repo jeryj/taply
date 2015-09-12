@@ -1,0 +1,93 @@
+<head>
+  <title>taply</title>
+</head>
+
+<body>
+<!-- don't put anything in the body. use iron router to do this -->
+</body>
+
+
+
+<template name="main">
+    {{> navigation}}
+    {{> yield}}
+    {{> tapLists }}
+</template>
+
+
+<template name="home">
+  <h1>TAPLY!</h1>
+</template>
+
+<template name="about">
+  <h1>About!</h1>
+  <p>Yer on the about page.</p>
+</template>
+
+
+<template name="register">
+    <h1>Register</h1>
+    <form class="register">
+        <label for="email">Email</label>
+        <input id="email" type="email" name="email">
+
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password">
+
+        <input type="submit" value="Register">
+    </form>
+</template>
+
+<template name="login">
+    <h1>Login</h1>
+    <form class="login">
+        <label for="email">Email</label>
+        <input id="email" type="email" name="email">
+
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password">
+
+        <input type="submit" value="Login">
+    </form>
+</template>
+
+
+<template name="navigation">
+    <ul>
+        <li><a href="{{pathFor route='home'}}">Home</a></li>
+        <li><a href="{{pathFor route='about'}}">About</a></li>
+        {{#if currentUser}}
+            <li><a href="#" class="logout">Logout</a></li>
+        {{else}}
+            <li><a href="{{pathFor route='register'}}">Register</a></li>
+            <li><a href="{{pathFor route='login'}}">Login</a></li>
+        {{/if}}
+    </ul>
+</template>
+
+<template name="tapLists">
+    <h2>TapLists</h2>
+    {{#if currentUser}}
+        {{> addTapList}}
+    {{/if}}
+    <ul>
+        {{#each tapList}}
+            <li><a href="/taplist/{{_id}}">{{name}}</a></li>
+        {{/each}}
+    </ul>
+    {{tapListCount}}
+</template>
+
+<template name="addTapList">
+    <form class="add-TapList">
+        <label for="name">TapList Name</label>
+        <input id="name" type="text" name="name">
+
+        <input type="submit" value="Create Tap List">
+    </form>
+</template>
+
+
+<template name="tapListPage">
+    <h2>TapList: {{name}}</h2>
+</template>
