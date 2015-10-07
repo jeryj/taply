@@ -78,6 +78,7 @@
     {{tapListCount}}
 </template>
 
+
 <template name="addTapList">
     <form class="add-TapList">
         <label for="name">TapList Name</label>
@@ -90,4 +91,7 @@
 
 <template name="tapListPage">
     <h2>TapList: {{name}}</h2>
+    {{#if currentUser}}
+        <p>Yo, DawG! You're logged in! Maybe you'd like to see a form to add a tap?</p>
+    {{/if}}
 </template>

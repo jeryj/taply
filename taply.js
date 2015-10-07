@@ -41,13 +41,6 @@ Router.route('/taplist/:_id', {
 });
 
 
-if (Meteor.isServer) {
-    // This code only runs on the server
-      Meteor.publish("taplists", function() {
-        return TapLists.find();
-      });
-}
-
 
 if (Meteor.isClient) {
 
@@ -121,7 +114,16 @@ if (Meteor.isClient) {
             var tapListName = $('[name=name]').val();
 
             // Insert a task into the collection
-            Meteor.call("addNewTapList", tapListName);
+            Meteor.call("addNewTapList", tapListName, function(error, results) {
+                if(error) {
+                    console.log(error.reason);
+                } else {
+                    // send them to the page they created
+                    var id = results; // returns the id of the page created
+                    var taplistURL = '/taplist/'+id;
+                    Router.go(taplistURL);
+                }
+            });
 
             $('[name=name]').val('');
         }
@@ -129,21 +131,48 @@ if (Meteor.isClient) {
 
 }
 
-
-Meteor.methods({
-  addNewTapList: function(tapListName) {
-    // Make sure the user is logged in before inserting a task
-    if(! Meteor.userId()) {
-      throw new Meteor.Error("not-authorized");
-    }
-
-    TapLists.insert({
-        name: tapListName,
-        createdAt: new Date(),
-        owner: Meteor.userId(),
-    }, function(error, results){
-        Router.go('home', { _id: results });
+if (Meteor.isServer) {
+    // This code only runs on the server
+    Meteor.publish("taplists", function() {
+        return TapLists.find();
     });
 
-  },
-});
+
+    Meteor.methods({
+        addNewTapList: function(tapListName) {
+            // Make sure the user is logged in before inserting a task
+            if(! Meteor.userId()) {
+              throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }
+
+            // check to make sure the value is a string
+            check(tapListName, String);
+
+            // if they submitted an empty form (via console), create a new name for them
+            if(tapListName == ""){
+                tapListName = defaultName(currentUser);
+            }
+
+            var data = {
+                        name: tapListName,
+                        createdAt: new Date(),
+                        owner: Meteor.userId(),
+                        }
+
+            // using return statement so it'll pass back to the function that called this
+            return TapLists.insert(data);
+
+        }
+
+    });
+
+    function defaultName(currentUser) {
+        var nextLetter = 'A'
+        var nextName = 'TapList ' + nextLetter;
+        while (TapLists.findOne({ name: nextName, createdBy: currentUser })) {
+            nextLetter = String.fromCharCode(nextLetter.charCodeAt(0) + 1);
+            nextName = 'TapList ' + nextLetter;
+        }
+        return nextName;
+    }
+}
