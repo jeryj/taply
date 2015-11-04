@@ -1,10 +1,19 @@
 // Collections
-// Individual tap info
-Taps = new Meteor.Collection('taps');
-
 // Each account can have multiple taplists with taps
 TapLists = new Meteor.Collection('taplists');
 
+// Individual tap info
+Taps = new Meteor.Collection('taps');
+
+
+function slugify(text){
+  return text.toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Replace spaces with -
+    .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+    .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+    .replace(/^-+/, '')             // Trim - from start of text
+    .replace(/-+$/, '');            // Trim - from end of text
+}
 
 // ROUTES
 Router.configure({
@@ -44,8 +53,10 @@ Router.route('/taplist/:_id', {
 
 if (Meteor.isClient) {
 
-    // subscribe to the published tasks function
+    // subscribe to the published taplists function
     Meteor.subscribe("taplists");
+     // subscribe to the published taps
+    Meteor.subscribe("taps");
 
     Template.register.events({
         'submit form': function(e) {
@@ -113,7 +124,7 @@ if (Meteor.isClient) {
             e.preventDefault();
             var tapListName = $('[name=name]').val();
 
-            // Insert a task into the collection
+            // Insert a taplist into the collection
             Meteor.call("addNewTapList", tapListName, function(error, results) {
                 if(error) {
                     console.log(error.reason);
@@ -125,7 +136,30 @@ if (Meteor.isClient) {
                 }
             });
 
+            // clear the name value
             $('[name=name]').val('');
+        }
+
+    });
+
+    Template.tapListPage.events({
+        'submit .add-tap': function(e) {
+            console.log('click');
+            e.preventDefault();
+            var beerName = $('#beer-name').val();
+            var parentID = $('#taplist-id').val();
+
+            // insert a tap into the collection
+            Meteor.call("addNewTap", beerName, function(error, results) {
+                if(error) {
+                    console.log(error.reason);
+                } else {
+                    // success! Add the tap to the taplist
+                    var id = results; // returns the id of the page created
+                    console.log('uhh... success? '+results);
+                }
+            });
+
         }
     });
 
@@ -137,10 +171,15 @@ if (Meteor.isServer) {
         return TapLists.find();
     });
 
+    Meteor.publish("taps", function() {
+        return Taps.find();
+    });
+
 
     Meteor.methods({
+        // TAPLIST METHODS
         addNewTapList: function(tapListName) {
-            // Make sure the user is logged in before inserting a task
+            // Make sure the user is logged in before inserting a taplist
             if(! Meteor.userId()) {
               throw new Meteor.Error("not-logged-in", "You're not logged-in.");
             }
@@ -153,6 +192,8 @@ if (Meteor.isServer) {
                 tapListName = defaultName(currentUser);
             }
 
+            // create the slug
+
             var data = {
                         name: tapListName,
                         createdAt: new Date(),
@@ -161,9 +202,37 @@ if (Meteor.isServer) {
 
             // using return statement so it'll pass back to the function that called this
             return TapLists.insert(data);
+        },
 
+        addNewTap: function(beerName) {
+            // Make sure the user is logged in before inserting a tap
+            if(! Meteor.userId()) {
+              throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }
+
+            // check to make sure the value is a string
+            check(beerName, String);
+
+            if(beerName == "") {
+                throw new Meteor.Error("no-beer-name", "Yo! Enter a name for your beer.");
+            }
+
+            /*// check to make sure the value is a string
+            check(parentID, String);
+
+            if(parentID == "") {
+                throw new Meteor.Error("no-parent-ID", "Yo! Don't delete our parentID vals. Not cool.");
+            }*/
+
+            var data = {
+                        name: beerName,
+                        createdAt: new Date(),
+                        //tapList: parentID,
+                        owner: Meteor.userId(),
+                        }
+
+            console.log('it ran');
         }
-
     });
 
     function defaultName(currentUser) {
