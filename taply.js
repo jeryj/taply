@@ -119,6 +119,12 @@ if (Meteor.isClient) {
         }
     });
 
+    Template.taps.helpers({
+        'taps': function(){
+            return Taps.find({}, {sort: {name: 1}});
+        }
+    });
+
     Template.addTapList.events({
         'submit form': function(e) {
             e.preventDefault();
@@ -150,7 +156,7 @@ if (Meteor.isClient) {
             var parentID = $('#taplist-id').val();
 
             // insert a tap into the collection
-            Meteor.call("addNewTap", beerName, function(error, results) {
+            Meteor.call("addNewTap", beerName, parentID, function(error, results) {
                 if(error) {
                     console.log(error.reason);
                 } else {
@@ -160,6 +166,24 @@ if (Meteor.isClient) {
                 }
             });
 
+        },
+
+    });
+
+
+    Template.tapLists.events({
+        'click .delete-taplist': function(e) {
+            e.preventDefault();
+            var tapListID = this._id;
+
+            Meteor.call("deleteTapList", tapListID, function(error, results) {
+                if(error) {
+                    console.log(error);
+                } else {
+                    // success!
+                    console.log('Deleted '+tapListID);
+                }
+            });
         }
     });
 
@@ -177,6 +201,7 @@ if (Meteor.isServer) {
 
 
     Meteor.methods({
+
         // TAPLIST METHODS
         addNewTapList: function(tapListName) {
             // Make sure the user is logged in before inserting a taplist
@@ -204,7 +229,17 @@ if (Meteor.isServer) {
             return TapLists.insert(data);
         },
 
-        addNewTap: function(beerName) {
+
+        deleteTapList: function(tapListID) {
+            console.log('wwuuuuuut!');
+
+
+            //console.log(tapListID);
+
+            TapLists.remove(tapListID);
+        },
+
+        addNewTap: function(beerName, parentID) {
             // Make sure the user is logged in before inserting a tap
             if(! Meteor.userId()) {
               throw new Meteor.Error("not-logged-in", "You're not logged-in.");
@@ -217,21 +252,21 @@ if (Meteor.isServer) {
                 throw new Meteor.Error("no-beer-name", "Yo! Enter a name for your beer.");
             }
 
-            /*// check to make sure the value is a string
+            // check to make sure the value is a string
             check(parentID, String);
 
             if(parentID == "") {
                 throw new Meteor.Error("no-parent-ID", "Yo! Don't delete our parentID vals. Not cool.");
-            }*/
+            }
 
             var data = {
                         name: beerName,
                         createdAt: new Date(),
-                        //tapList: parentID,
+                        tapList: parentID,
                         owner: Meteor.userId(),
                         }
 
-            console.log('it ran');
+            return Taps.insert(data);
         }
     });
 

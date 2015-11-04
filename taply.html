@@ -72,7 +72,7 @@
     {{/if}}
     <ul>
         {{#each tapList}}
-            <li><a href="/taplist/{{_id}}">{{name}}</a></li>
+            <li><a href="/taplist/{{_id}}">{{name}}</a> <a href="#" data-tapListID="{{_id}}" class="delete-taplist">Delete</a></li>
         {{/each}}
     </ul>
     {{tapListCount}}
