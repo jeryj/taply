@@ -57,6 +57,8 @@ if (Meteor.isClient) {
     Meteor.subscribe("taplists");
      // subscribe to the published taps
     Meteor.subscribe("taps");
+    //
+    Meteor.subscribe("tapsOwnedByUser");
 
     Template.register.events({
         'submit form': function(e) {
@@ -150,9 +152,23 @@ if (Meteor.isClient) {
         }
     });
 
+    // global template helper
+    Template.registerHelper('isOwner', function(tapListID) {
+        var isOwner = false;
+        if(Meteor.userId()) {
+            var tapList = TapLists.findOne({_id: tapListID});
+            if(tapList.owner == Meteor.userId()) {
+                isOwner = true;
+            }
+        }
+
+        return isOwner;
+    });
+
+
+
     Template.tapListPage.events({
         'submit .add-tap': function(e) {
-            console.log('click');
             e.preventDefault();
             var beerName = $('#beer-name').val();
             var tapListID = $('#taplist-id').val();
@@ -163,8 +179,9 @@ if (Meteor.isClient) {
                     console.log(error.reason);
                 } else {
                     // success! Add the tap to the taplist
-                    var id = results; // returns the id of the page created
-                    console.log('uhh... success? '+results);
+                    var id = results; // returns the id of the tap created
+                    // clear the input
+                    $('#beer-name').val('');
                 }
             });
 
@@ -202,7 +219,6 @@ if (Meteor.isServer) {
     Meteor.publish("taps", function() {
         return Taps.find();
     });
-
 
     Meteor.methods({
 
@@ -250,6 +266,7 @@ if (Meteor.isServer) {
 
             // they own it, so... it's gone!
             // TODO: Soft delete, probably.
+            // TODO: Also delete the taps associated with that tapList
             TapLists.remove(tapListID);
         },
 
@@ -287,7 +304,7 @@ if (Meteor.isServer) {
     function defaultName(currentUser) {
         var nextLetter = 'A'
         var nextName = 'TapList ' + nextLetter;
-        while (TapLists.findOne({ name: nextName, createdBy: currentUser })) {
+        while (TapLists.findOne({ name: nextName, owner: currentUser })) {
             nextLetter = String.fromCharCode(nextLetter.charCodeAt(0) + 1);
             nextName = 'TapList ' + nextLetter;
         }
