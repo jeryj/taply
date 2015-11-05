@@ -73,7 +73,7 @@
     <ul>
         {{#each tapList}}
             <li><a href="/taplist/{{_id}}">{{name}}</a>
-                {{#if isOwner _id}}
+                {{#if isOwner owner}}
                      <a href="#" class="delete-taplist">Delete</a>
                 {{/if}}
             </li>
@@ -98,7 +98,7 @@
         {{#each taps _id}}
             <li>
                 {{name}}
-                {{#if isOwner ../_id}}
+                {{#if isOwner owner}}
                     <a href="#" class="delete-tap">Delete</a>
                 {{/if}}
             </li>

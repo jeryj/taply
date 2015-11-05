@@ -153,13 +153,10 @@ if (Meteor.isClient) {
     });
 
     // global template helper
-    Template.registerHelper('isOwner', function(tapListID) {
+    Template.registerHelper('isOwner', function(owner) {
         var isOwner = false;
-        if(Meteor.userId()) {
-            var tapList = TapLists.findOne({_id: tapListID});
-            if(tapList.owner == Meteor.userId()) {
-                isOwner = true;
-            }
+        if(Meteor.userId() === owner) {
+            isOwner = true;
         }
 
         return isOwner;
