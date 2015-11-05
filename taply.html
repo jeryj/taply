@@ -72,7 +72,7 @@
     {{/if}}
     <ul>
         {{#each tapList}}
-            <li><a href="/taplist/{{_id}}">{{name}}</a> <a href="#" data-tapListID="{{_id}}" class="delete-taplist">Delete</a></li>
+            <li><a href="/taplist/{{_id}}">{{name}}</a> <a href="#" class="delete-taplist">Delete</a></li>
         {{/each}}
     </ul>
     {{tapListCount}}
@@ -97,18 +97,22 @@
     </ul>
 </template>
 
+<template name="addTapForm">
+    <form class="add-tap">
+        <label for="beer-name">Beer Name</label>
+        <input id="beer-name" type="text" name="beer-name">
+        <input id="taplist-id" type="hidden" name="taplist-id" value="{{_id}}"/>
+        <input type="submit" value="Add Tap">
+    </form>
+</template>
+
 
 <template name="tapListPage">
     <h2>TapList: {{name}}</h2>
     {{#if currentUser}}
         <p>Yo, DawG! You're logged in! Maybe you'd like to see a form to add a tap to this list?</p>
         Add a tap for {{name}}
-        <form class="add-tap">
-            <label for="beer-name">Beer Name</label>
-            <input id="beer-name" type="text" name="beer-name">
-            <input id="taplist-id" type="hidden" name="taplist-id" value="{{_id}}"/>
-            <input type="submit" value="Add Tap">
-        </form>
+        {{> addTapForm}}
     {{/if}}
 
     {{> taps }}

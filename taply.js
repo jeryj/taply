@@ -176,9 +176,11 @@ if (Meteor.isClient) {
             e.preventDefault();
             var tapListID = this._id;
 
+            // TODO: Give some kind of warning message
+
             Meteor.call("deleteTapList", tapListID, function(error, results) {
                 if(error) {
-                    console.log(error);
+                    console.log(error.reason);
                 } else {
                     // success!
                     console.log('Deleted '+tapListID);
@@ -231,11 +233,21 @@ if (Meteor.isServer) {
 
 
         deleteTapList: function(tapListID) {
-            console.log('wwuuuuuut!');
+            // Make sure the user is logged in before deleting a taplist
+            if(! Meteor.userId()) {
+              throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }
 
+            // check to make sure that the taplist is owned by the current user
+            theTapList = TapLists.findOne({ _id: tapListID });
+            // if they don't own the taplist, throw an error
+            if(theTapList.owner !== Meteor.userId()) {
+                console.log(theTapList.owner + ' ' + Meteor.userId());
+                throw new Meteor.Error("taplist-not-owned-by-user", "You don't own this TapList. What do you think you're doin', bud?.");
+            }
 
-            //console.log(tapListID);
-
+            // they own it, so... it's gone!
+            // TODO: Soft delete, probably.
             TapLists.remove(tapListID);
         },
 
