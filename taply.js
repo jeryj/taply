@@ -116,13 +116,8 @@ if (Meteor.isClient) {
 
         'tapListCount': function() {
             return TapLists.find().count();
-        }
-    });
+        },
 
-    Template.taps.helpers({
-        'taps': function(){
-            return Taps.find({}, {sort: {name: 1}});
-        }
     });
 
     Template.addTapList.events({
@@ -148,15 +143,22 @@ if (Meteor.isClient) {
 
     });
 
+    Template.taps.helpers({
+        'taps': function(tapListID){
+            // return taps of the current tapListID
+            return Taps.find({tapList: tapListID}, {sort: {name: 1}});
+        }
+    });
+
     Template.tapListPage.events({
         'submit .add-tap': function(e) {
             console.log('click');
             e.preventDefault();
             var beerName = $('#beer-name').val();
-            var parentID = $('#taplist-id').val();
+            var tapListID = $('#taplist-id').val();
 
             // insert a tap into the collection
-            Meteor.call("addNewTap", beerName, parentID, function(error, results) {
+            Meteor.call("addNewTap", beerName, tapListID, function(error, results) {
                 if(error) {
                     console.log(error.reason);
                 } else {

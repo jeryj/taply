@@ -91,8 +91,13 @@
 
 <template name="taps">
     <ul class="taps">
-        {{#each taps}}
-            <li>{{name}}</li>
+        {{#each taps _id}}
+            <li>
+                {{name}}
+                {{#if currentUser}}
+                    <a href="#" class="delete-tap">Delete</a>
+                {{/if}}
+            </li>
         {{/each}}
     </ul>
 </template>
@@ -114,6 +119,5 @@
         Add a tap for {{name}}
         {{> addTapForm}}
     {{/if}}
-
     {{> taps }}
 </template>
