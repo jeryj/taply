@@ -308,8 +308,12 @@ if (Meteor.isServer) {
 
             // they own it, so... it's gone!
             // TODO: Soft delete, probably.
-            // TODO: Also delete the taps associated with that tapList
+
+            // delete the taps associated with that tapList
+            Taps.remove({tapList: tapListId});
+            // delete the taplist
             TapLists.remove(tapListId);
+
         },
 
         addNewTap: function(beerName, parentID) {
@@ -378,6 +382,7 @@ if (Meteor.isServer) {
     }
 }
 
+// Some reusable functions to help us out
 var isTapOwner = function(userId, tapId) {
     isLoggedIn(userId);
 
