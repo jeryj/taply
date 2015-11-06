@@ -152,6 +152,24 @@ if (Meteor.isClient) {
         }
     });
 
+    Template.taps.events({
+        'click .delete-tap': function(e) {
+            e.preventDefault();
+            var tapID = this._id;
+
+            // TODO: Give some kind of warning message
+
+            Meteor.call("deleteTap", tapID, function(error, results) {
+                if(error) {
+                    console.log(error.reason);
+                } else {
+                    // success!
+                    console.log('Deleted '+tapID);
+                }
+            });
+        }
+    });
+
     // global template helper
     Template.registerHelper('isOwner', function(owner) {
         var isOwner = false;
@@ -295,7 +313,25 @@ if (Meteor.isServer) {
                         }
 
             return Taps.insert(data);
-        }
+        },
+
+        deleteTap: function(tapID) {
+            // Make sure the user is logged in before deleting a taplist
+            if(! Meteor.userId()) {
+              throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+            }
+
+            // check to make sure that the taplist is owned by the current user
+            theTap = Taps.findOne({ _id: tapID });
+            // if they don't own the tap, throw an error
+            if(theTap.owner !== Meteor.userId()) {
+                throw new Meteor.Error("tap-not-owned-by-user", "You don't own this Tap. What do you think you're doin', bud?.");
+            }
+
+            // they own it, so... it's gone!
+            // TODO: Soft delete, probably.
+            Taps.remove(tapID);
+        },
     });
 
     function defaultName(currentUser) {
