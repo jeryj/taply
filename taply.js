@@ -180,7 +180,6 @@ if (Meteor.isClient) {
             e.preventDefault();
             var tapId = this._id;
 
-            // TODO: Give some kind of warning message
             Meteor.call("archiveTap", tapId, function(error, results) {
                 if(error) {
                     console.log(error.reason);
@@ -191,6 +190,23 @@ if (Meteor.isClient) {
             });
         },
 
+    });
+
+    Template.archivedTaps.events({
+        'click .unarchive-tap': function(e) {
+            e.preventDefault();
+            var tapId = this._id;
+
+            // TODO: Give some kind of warning message
+            Meteor.call("unarchiveTap", tapId, function(error, results) {
+                if(error) {
+                    console.log(error.reason);
+                } else {
+                    // success!
+                    console.log('Unarchived '+tapId);
+                }
+            });
+        }
     });
 
     // global template helper
@@ -356,10 +372,19 @@ if (Meteor.isServer) {
                 throw new Meteor.Error("not-tap-owner", "You don't own this tap.");
             };
 
-            // they own it, so... it's gone!
-            // TODO: Soft delete, probably.
             Taps.update(tapId, {
                 $set : {archived: true}
+            });
+        },
+
+        unarchiveTap: function(tapId) {
+            // Make sure the user is logged in before archiving a taplist
+            if(isTapOwner(Meteor.userId(), tapId) !== true) {
+                throw new Meteor.Error("not-tap-owner", "You don't own this tap.");
+            };
+
+            Taps.update(tapId, {
+                $set : {archived: false}
             });
         },
 
