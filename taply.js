@@ -279,9 +279,7 @@ if (Meteor.isServer) {
         // TAPLIST METHODS
         addNewTapList: function(tapListName) {
             // Make sure the user is logged in before inserting a taplist
-            if(! Meteor.userId()) {
-              throw new Meteor.Error("not-logged-in", "You're not logged-in.");
-            }
+            isLoggedIn(Meteor.userId());
 
             // check to make sure the value is a string
             check(tapListName, String);
@@ -292,11 +290,11 @@ if (Meteor.isServer) {
             }
 
             // create the slug
-
             var data = {
                         name: tapListName,
                         createdAt: new Date(),
                         owner: Meteor.userId(),
+                        archived: false,
                         }
 
             // using return statement so it'll pass back to the function that called this
@@ -305,18 +303,8 @@ if (Meteor.isServer) {
 
 
         deleteTapList: function(tapListId) {
-            // Make sure the user is logged in before deleting a taplist
-            if(! Meteor.userId()) {
-              throw new Meteor.Error("not-logged-in", "You're not logged-in.");
-            }
-
-            // check to make sure that the taplist is owned by the current user
-            theTapList = TapLists.findOne({ _id: tapListId });
-            // if they don't own the taplist, throw an error
-            if(theTapList.owner !== Meteor.userId()) {
-                console.log(theTapList.owner + ' ' + Meteor.userId());
-                throw new Meteor.Error("taplist-not-owned-by-user", "You don't own this TapList. What do you think you're doin', bud?.");
-            }
+            // Make sure the user has permissions to be here
+            isTapListOwner(Meteor.userId(), tapListId);
 
             // they own it, so... it's gone!
             // TODO: Soft delete, probably.
@@ -325,10 +313,7 @@ if (Meteor.isServer) {
         },
 
         addNewTap: function(beerName, parentID) {
-            // Make sure the user is logged in before inserting a tap
-            if(! Meteor.userId()) {
-              throw new Meteor.Error("not-logged-in", "You're not logged-in.");
-            }
+            isLoggedIn(Meteor.userId());
 
             // check to make sure the value is a string
             check(beerName, String);
@@ -356,10 +341,8 @@ if (Meteor.isServer) {
         },
 
         deleteTap: function(tapId) {
-            // Make sure the user is logged in before archiving a taplist
-            if(isTapOwner(Meteor.userId(), tapId) !== true) {
-                throw new Meteor.Error("not-tap-owner", "You don't own this tap.");
-            };
+            // check permissions
+            isTapOwner(Meteor.userId(), tapId);
 
             // they own it, so... it's gone!
             // TODO: Soft delete, probably.
@@ -367,10 +350,7 @@ if (Meteor.isServer) {
         },
 
         archiveTap: function(tapId) {
-            // Make sure the user is logged in before archiving a taplist
-            if(isTapOwner(Meteor.userId(), tapId) !== true) {
-                throw new Meteor.Error("not-tap-owner", "You don't own this tap.");
-            };
+            isTapOwner(Meteor.userId(), tapId);
 
             Taps.update(tapId, {
                 $set : {archived: true}
@@ -378,10 +358,7 @@ if (Meteor.isServer) {
         },
 
         unarchiveTap: function(tapId) {
-            // Make sure the user is logged in before archiving a taplist
-            if(isTapOwner(Meteor.userId(), tapId) !== true) {
-                throw new Meteor.Error("not-tap-owner", "You don't own this tap.");
-            };
+            isTapOwner(Meteor.userId(), tapId);
 
             Taps.update(tapId, {
                 $set : {archived: false}
@@ -402,15 +379,35 @@ if (Meteor.isServer) {
 }
 
 var isTapOwner = function(userId, tapId) {
-    if(! userId) {
-      throw new Meteor.Error("not-logged-in", "You're not logged-in.");
-    }
+    isLoggedIn(userId);
 
     // check to make sure that the taplist is owned by the current user
     theTap = Taps.findOne({ _id: tapId });
     // if they don't own the tap, throw an error
     if(theTap.owner !== userId) {
         throw new Meteor.Error("tap-not-owned-by-user", "You don't own this Tap. What do you think you're doin', bud?.");
+    }
+
+    return true;
+}
+
+var isTapListOwner = function(userId, tapListId) {
+    isLoggedIn(userId);
+
+    // check to make sure that the taplist is owned by the current user
+    theTapList = TapLists.findOne({ _id: tapListId });
+    // if they don't own the tap, throw an error
+    if(theTapList.owner !== userId) {
+        throw new Meteor.Error("taplist-not-owned-by-user", "You don't own this TapList. What do you think you're doin', bud?.");
+    }
+
+    return true;
+}
+
+var isLoggedIn = function(userId) {
+    // Make sure the user is logged in before inserting a tap
+    if(! userId) {
+      throw new Meteor.Error("not-logged-in", "You're not logged-in.");
     }
 
     return true;
