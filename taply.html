@@ -74,7 +74,7 @@
         {{#each tapList}}
             <li><a href="/taplist/{{_id}}">{{name}}</a>
                 {{#if isOwner owner}}
-                     <a href="#" class="delete-taplist">Delete</a>
+                    <a href="#" class="delete-taplist">Delete</a>
                 {{/if}}
             </li>
         {{/each}}
@@ -94,12 +94,29 @@
 
 
 <template name="taps">
+    <h3>{{name}}'s Taps</h3>
     <ul class="taps">
         {{#each taps _id}}
             <li>
                 {{name}}
                 {{#if isOwner owner}}
                     <a href="#" class="delete-tap">Delete</a>
+                    <a href="#" class="archive-tap">Archive</a>
+                {{/if}}
+            </li>
+        {{/each}}
+    </ul>
+</template>
+
+<template name="archivedTaps">
+    <h3>{{name}}'s Archived Taps</h3>
+    <ul class="archived-taps">
+        {{#each archivedTaps _id}}
+            <li>
+                {{name}}
+                {{#if isOwner owner}}
+                    <a href="#" class="delete-tap">Delete</a>
+                    <a href="#" class="unarchive-tap">UnArchive</a>
                 {{/if}}
             </li>
         {{/each}}
@@ -124,4 +141,5 @@
         {{> addTapForm}}
     {{/if}}
     {{> taps }}
+    {{> archivedTaps }}
 </template>

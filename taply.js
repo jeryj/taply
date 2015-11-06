@@ -146,28 +146,51 @@ if (Meteor.isClient) {
     });
 
     Template.taps.helpers({
-        'taps': function(tapListID){
-            // return taps of the current tapListID
-            return Taps.find({tapList: tapListID}, {sort: {name: 1}});
+        'taps': function(tapListId){
+            // return taps of the current tapListId
+            return Taps.find({tapList: tapListId, archived: false}, {sort: {name: 1}});
+        }
+    });
+
+    Template.archivedTaps.helpers({
+        'archivedTaps': function(tapListId){
+            // return taps of the current tapListId
+            return Taps.find({tapList: tapListId, archived: true}, {sort: {name: 1}});
         }
     });
 
     Template.taps.events({
         'click .delete-tap': function(e) {
             e.preventDefault();
-            var tapID = this._id;
+            var tapId = this._id;
 
             // TODO: Give some kind of warning message
 
-            Meteor.call("deleteTap", tapID, function(error, results) {
+            Meteor.call("deleteTap", tapId, function(error, results) {
                 if(error) {
                     console.log(error.reason);
                 } else {
                     // success!
-                    console.log('Deleted '+tapID);
+                    console.log('Deleted '+tapId);
                 }
             });
-        }
+        },
+
+        'click .archive-tap': function(e) {
+            e.preventDefault();
+            var tapId = this._id;
+
+            // TODO: Give some kind of warning message
+            Meteor.call("archiveTap", tapId, function(error, results) {
+                if(error) {
+                    console.log(error.reason);
+                } else {
+                    // success!
+                    console.log('Archived '+tapId);
+                }
+            });
+        },
+
     });
 
     // global template helper
@@ -186,10 +209,10 @@ if (Meteor.isClient) {
         'submit .add-tap': function(e) {
             e.preventDefault();
             var beerName = $('#beer-name').val();
-            var tapListID = $('#taplist-id').val();
+            var tapListId = $('#taplist-id').val();
 
             // insert a tap into the collection
-            Meteor.call("addNewTap", beerName, tapListID, function(error, results) {
+            Meteor.call("addNewTap", beerName, tapListId, function(error, results) {
                 if(error) {
                     console.log(error.reason);
                 } else {
@@ -208,16 +231,16 @@ if (Meteor.isClient) {
     Template.tapLists.events({
         'click .delete-taplist': function(e) {
             e.preventDefault();
-            var tapListID = this._id;
+            var tapListId = this._id;
 
             // TODO: Give some kind of warning message
 
-            Meteor.call("deleteTapList", tapListID, function(error, results) {
+            Meteor.call("deleteTapList", tapListId, function(error, results) {
                 if(error) {
                     console.log(error.reason);
                 } else {
                     // success!
-                    console.log('Deleted '+tapListID);
+                    console.log('Deleted '+tapListId);
                 }
             });
         }
@@ -265,14 +288,14 @@ if (Meteor.isServer) {
         },
 
 
-        deleteTapList: function(tapListID) {
+        deleteTapList: function(tapListId) {
             // Make sure the user is logged in before deleting a taplist
             if(! Meteor.userId()) {
               throw new Meteor.Error("not-logged-in", "You're not logged-in.");
             }
 
             // check to make sure that the taplist is owned by the current user
-            theTapList = TapLists.findOne({ _id: tapListID });
+            theTapList = TapLists.findOne({ _id: tapListId });
             // if they don't own the taplist, throw an error
             if(theTapList.owner !== Meteor.userId()) {
                 console.log(theTapList.owner + ' ' + Meteor.userId());
@@ -282,7 +305,7 @@ if (Meteor.isServer) {
             // they own it, so... it's gone!
             // TODO: Soft delete, probably.
             // TODO: Also delete the taps associated with that tapList
-            TapLists.remove(tapListID);
+            TapLists.remove(tapListId);
         },
 
         addNewTap: function(beerName, parentID) {
@@ -310,28 +333,36 @@ if (Meteor.isServer) {
                         createdAt: new Date(),
                         tapList: parentID,
                         owner: Meteor.userId(),
+                        archived: false,
                         }
 
             return Taps.insert(data);
         },
 
-        deleteTap: function(tapID) {
-            // Make sure the user is logged in before deleting a taplist
-            if(! Meteor.userId()) {
-              throw new Meteor.Error("not-logged-in", "You're not logged-in.");
-            }
-
-            // check to make sure that the taplist is owned by the current user
-            theTap = Taps.findOne({ _id: tapID });
-            // if they don't own the tap, throw an error
-            if(theTap.owner !== Meteor.userId()) {
-                throw new Meteor.Error("tap-not-owned-by-user", "You don't own this Tap. What do you think you're doin', bud?.");
-            }
+        deleteTap: function(tapId) {
+            // Make sure the user is logged in before archiving a taplist
+            if(isTapOwner(Meteor.userId(), tapId) !== true) {
+                throw new Meteor.Error("not-tap-owner", "You don't own this tap.");
+            };
 
             // they own it, so... it's gone!
             // TODO: Soft delete, probably.
-            Taps.remove(tapID);
+            Taps.remove(tapId);
         },
+
+        archiveTap: function(tapId) {
+            // Make sure the user is logged in before archiving a taplist
+            if(isTapOwner(Meteor.userId(), tapId) !== true) {
+                throw new Meteor.Error("not-tap-owner", "You don't own this tap.");
+            };
+
+            // they own it, so... it's gone!
+            // TODO: Soft delete, probably.
+            Taps.update(tapId, {
+                $set : {archived: true}
+            });
+        },
+
     });
 
     function defaultName(currentUser) {
@@ -343,4 +374,19 @@ if (Meteor.isServer) {
         }
         return nextName;
     }
+}
+
+var isTapOwner = function(userId, tapId) {
+    if(! userId) {
+      throw new Meteor.Error("not-logged-in", "You're not logged-in.");
+    }
+
+    // check to make sure that the taplist is owned by the current user
+    theTap = Taps.findOne({ _id: tapId });
+    // if they don't own the tap, throw an error
+    if(theTap.owner !== userId) {
+        throw new Meteor.Error("tap-not-owned-by-user", "You don't own this Tap. What do you think you're doin', bud?.");
+    }
+
+    return true;
 }
