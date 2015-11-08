@@ -196,11 +196,19 @@ if (Meteor.isClient) {
     Template.addTapForm.events({
         'submit .add-tap': function(e) {
             e.preventDefault();
+            var tapListId = this._id;
+
             var beerName = $('#beer-name').val();
-            var tapListId = $('#taplist-id').val();
+            var beerType = $('#beer-type').val();
+
+            tap = {
+                        'name' : beerName,
+                        'type' : beerType,
+                    };
+
 
             // insert a tap into the collection
-            Meteor.call("addNewTap", beerName, tapListId, function(error, results) {
+            Meteor.call("addNewTap", tap, tapListId, function(error, results) {
                 if(error) {
                     console.log(error.reason);
                 } else {
@@ -208,6 +216,7 @@ if (Meteor.isClient) {
                     var id = results; // returns the id of the tap created
                     // clear the input
                     $('#beer-name').val('');
+                    $('#beer-type').val('');
                 }
             });
 
@@ -358,13 +367,14 @@ if (Meteor.isServer) {
             });
         },
 
-        addNewTap: function(beerName, parentID) {
+        addNewTap: function(tap, parentID) {
             isLoggedIn(Meteor.userId());
 
-            // check to make sure the value is a string
-            check(beerName, String);
 
-            if(beerName == "") {
+            // check to make sure the value is a string
+            check(tap.name, String);
+
+            if(tap.name == "") {
                 throw new Meteor.Error("no-beer-name", "Yo! Enter a name for your beer.");
             }
 
@@ -376,7 +386,8 @@ if (Meteor.isServer) {
             }
 
             var data = {
-                        name: beerName,
+                        name: tap.name,
+                        type: tap.type,
                         createdAt: new Date(),
                         tapList: parentID,
                         owner: Meteor.userId(),

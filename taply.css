@@ -1,1 +1,25 @@
-/* CSS declarations go here */
+body {
+    font-family: Arial;
+    max-width: 48em;
+    padding: 1em 2em;
+    margin: 0 auto;
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Arial Black';
+}
+
+.no-list-style {
+    padding: 0;
+    list-style: none;
+}
+
+.inline-nav li {
+    display: inline-block;
+    list-style: none;
+    margin-right: 0.8em;
+}
+
+.block-list li {
+    margin-bottom: 1.2em;
+}

@@ -53,16 +53,18 @@
 
 
 <template name="navigation">
-    <ul>
-        <li><a href="{{pathFor route='home'}}">Home</a></li>
-        <li><a href="{{pathFor route='about'}}">About</a></li>
-        {{#if currentUser}}
-            <li><a href="#" class="logout">Logout</a></li>
-        {{else}}
-            <li><a href="{{pathFor route='register'}}">Register</a></li>
-            <li><a href="{{pathFor route='login'}}">Login</a></li>
-        {{/if}}
-    </ul>
+    <nav>
+        <ul class="no-list-style inline-nav">
+            <li><a href="{{pathFor route='home'}}">Home</a></li>
+            <li><a href="{{pathFor route='about'}}">About</a></li>
+            {{#if currentUser}}
+                <li><a href="#" class="logout">Logout</a></li>
+            {{else}}
+                <li><a href="{{pathFor route='register'}}">Register</a></li>
+                <li><a href="{{pathFor route='login'}}">Login</a></li>
+            {{/if}}
+        </ul>
+    </nav>
 </template>
 
 <template name="tapLists">
@@ -70,7 +72,7 @@
     {{#if currentUser}}
         {{> addTapList}}
     {{/if}}
-    <ul>
+    <ul class="no-list-style block-list">
         {{#each tapList}}
             <li><a href="/taplist/{{_id}}">{{name}}</a>
                 {{#if isOwner owner}}
@@ -86,7 +88,7 @@
 
 <template name="archivedTapLists">
     <h3>Archived TapLists</h3>
-    <ul>
+    <ul class="no-list-style block-list">
         {{#each archivedTapList}}
             <li><a href="/taplist/{{_id}}">{{name}}</a>
                 {{#if isOwner owner}}
@@ -111,10 +113,13 @@
 
 <template name="taps">
     <h3>{{name}}'s Taps</h3>
-    <ul class="taps">
+    <ul class="taps no-list-style block-list">
         {{#each taps _id}}
             <li>
-                {{name}}
+                <strong>{{name}}</strong><br/>
+                {{#if type}}
+                    Type: {{type}}<br/>
+                {{/if}}
                 {{#if isOwner owner}}
                     <a href="#" class="delete-tap">Delete</a>
                     <a href="#" class="archive-tap">Archive</a>
@@ -143,7 +148,10 @@
     <form class="add-tap">
         <label for="beer-name">Beer Name</label>
         <input id="beer-name" type="text" name="beer-name">
-        <input id="taplist-id" type="hidden" name="taplist-id" value="{{_id}}"/>
+
+        <label for="beer-name">Beer Type</label>
+        <input id="beer-type" type="text" name="beer-type">
+
         <input type="submit" value="Add Tap">
     </form>
 </template>
