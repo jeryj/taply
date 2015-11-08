@@ -11,7 +11,6 @@
 <template name="main">
     {{> navigation}}
     {{> yield}}
-    {{> tapLists }}
 </template>
 
 
@@ -57,6 +56,7 @@
         <ul class="no-list-style inline-nav">
             <li><a href="{{pathFor route='home'}}">Home</a></li>
             <li><a href="{{pathFor route='about'}}">About</a></li>
+            <li><a href="{{pathFor route='tapLists'}}">TapLists</a></li>
             {{#if currentUser}}
                 <li><a href="#" class="logout">Logout</a></li>
             {{else}}
@@ -131,11 +131,12 @@
 
 <template name="archivedTaps">
     <h3>{{name}}'s Archived Taps</h3>
-    <ul class="archived-taps">
+    <ul class="archived-taps no-list-style block-list">
         {{#each archivedTaps _id}}
             <li>
                 {{name}}
                 {{#if isOwner owner}}
+                    <br/>
                     <a href="#" class="delete-tap">Delete</a>
                     <a href="#" class="unarchive-tap">UnArchive</a>
                 {{/if}}
@@ -156,13 +157,16 @@
     </form>
 </template>
 
+<template name="addTap">
+    <h3>Add Tap: {{name}}</h3>
+    {{> addTapForm}}
+</template>
+
 
 <template name="tapListPage">
     <h2>TapList: {{name}}</h2>
     {{#if currentUser}}
-        <p>Yo, DawG! You're logged in! Maybe you'd like to see a form to add a tap to this list?</p>
-        Add a tap for {{name}}
-        {{> addTapForm}}
+        <a href="{{_id}}/add-tap">Add Tap</a>
     {{/if}}
     {{> taps }}
     {{> archivedTaps }}

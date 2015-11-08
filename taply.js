@@ -41,12 +41,26 @@ Router.route('/login', {
   template: 'login'
 });
 
+Router.route('/taplist/:_id/add-tap', {
+  name: 'addTap',
+  template: 'addTap',
+  data: function(){
+        var currentTapList = this.params._id;
+        return TapLists.findOne({ _id: currentTapList });
+    }
+});
+
 Router.route('/taplist/:_id', {
     template: 'tapListPage',
     data: function(){
         var currentTapList = this.params._id;
         return TapLists.findOne({ _id: currentTapList });
     }
+});
+
+Router.route('/taplists', {
+    name: 'tapLists',
+    template: 'tapLists',
 });
 
 
