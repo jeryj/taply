@@ -147,13 +147,90 @@
 
 <template name="addTapForm">
     <form class="add-tap">
-        <label for="beer-name">Beer Name</label>
-        <input id="beer-name" type="text" name="beer-name">
+        <label for="tap-name">Tap Name</label>
+        <input id="tap-name" type="text" name="tap-name" />
 
-        <label for="beer-name">Beer Type</label>
-        <input id="beer-type" type="text" name="beer-type">
+        <label for="tap-location">Tap Position (From Left to Right)</label>
+        <input id="tap-location" type="text" name="tap-location" />
+
+        <label for="tap-designator">Tap Designator</label>
+        <input id="tap-designator" type="text" name="tap-designator" />
 
         <input type="submit" value="Add Tap">
+    </form>
+</template>
+
+<template name="addBev">
+    <form class="add-bev">
+        <label for="beverage-type">Beverage Type? For other styles?</label>
+        <input id="beverage-type" type="text" name="beverage-type" />
+
+        <label for="bjcp-category">BJCP Category</label>
+        <select id="bjcp-category" name="bjcp-category">
+            <option value="standard american beer">1. Standard American Beer</option>
+            <option value="international lager">2. International Lager</option>
+        </select>
+
+        <label for="bjcp-subcategory">BJCP Subcategory</label>
+        <select id="bjcp-subcategory" name="bjcp-subcategory">
+            <option value="american light lager">1A. American Light Lager</option>
+            <option value="american lager">1B. American Lager</option>
+            <option value="cream ale">1C. Cream Ale</option>
+            <option value="american wheat beer">1D. American Wheat Beer</option>
+            <option value="international pale lager">2A. International Pale Lager</option>
+            <option value="international amber lager">2B. International Amber Lager</option>
+            <option value="international dark lager">2C. International Dark Lager</option>
+        </select>
+
+        <label for="srm">SRM</label>
+        <input id="srm" type="text" name="srm" />
+
+        <label for="glass-shape">Glass Shape</label>
+        <select id="glass-shape" name="glass-shape">
+            <option value="shaker pint">Shaker Pint</option>
+            <option value="nonic pint">Nonic Pint</option>
+            <option value="tulip">Tulip</option>
+            <option value="snifter">Snifter</option>
+            <option value="goblet">Goblet</option>
+            <option value="pilsner flute">Pilsner Flute</option>
+            <option value="mason jar">Mason Jar</option>
+        </select>
+
+        <label for="abv">ABV</label>
+        <input id="abv" type="text" name="abv" />%
+
+        <label for="ibu">IBUs</label>
+        <input id="ibu" type="text" name="ibu" />%
+
+        <label for="hoppiness">Hoppiness</label>
+        <select id="hoppiness" name="hoppiness">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+        <label for="og">Original Gravity (Specific Gravity)</label>
+        <input id="og" type="text" name="og" />
+
+        <label for="fg">Final Gravity (Specific Gravity)</label>
+        <input id="fg" type="text" name="fg" />
+
+        <label for="brew-date">Brew Date</label>
+        <input id="brew-date" type="text" name="brew-date" />
+
+        <label for="born-on">Born on</label>
+        <input id="born-on" type="text" name="born-on" />
+
+        <label for="quantity">Stock / Quantity</label>
+        <select id="quantity" name="quantity">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+        </select>
+
+        <input type="submit" value="Add Beverage">
     </form>
 </template>
 
