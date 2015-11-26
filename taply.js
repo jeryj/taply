@@ -5,6 +5,9 @@ TapLists = new Meteor.Collection('taplists');
 // Individual tap info
 Taps = new Meteor.Collection('taps');
 
+// Individual Beer info
+Bevs = new Meteor.Collection('bevs');
+
 
 function slugify(text){
   return text.toString().toLowerCase()
@@ -50,6 +53,18 @@ Router.route('/taplist/:_id/add-tap', {
     }
 });
 
+Router.route('/add-bev', {
+  name: 'addBev',
+  template: 'addBev',
+  data: function(){
+        /*var currentTap = this.params._id;
+        return Taps.findOne({ _id: currentTap });
+        // also need current taplist
+        var currentTapList = this.params._id;
+        return TapLists.findOne({ _id: currentTap });*/
+    }
+});
+
 Router.route('/taplist/:_id', {
     template: 'tapListPage',
     data: function(){
@@ -71,8 +86,8 @@ if (Meteor.isClient) {
     Meteor.subscribe("taplists");
      // subscribe to the published taps
     Meteor.subscribe("taps");
-    //
-    Meteor.subscribe("tapsOwnedByUser");
+    // Subscribe to published bevs
+    Meteor.subscribe("bevs");
 
     Template.register.events({
         'submit form': function(e) {
@@ -212,12 +227,14 @@ if (Meteor.isClient) {
             e.preventDefault();
             var tapListId = this._id;
 
-            var beerName = $('#beer-name').val();
-            var beerType = $('#beer-type').val();
+            var tapName = $('#tap-name').val();
+            var tapLocation = $('#tap-location').val();
+            tapLocation = parseInt(tapLocation, 10);
+            var tapDesignator = $('#tap-designator').val();
 
             tap = {
-                        'name' : beerName,
-                        'type' : beerType,
+                        'name' : tapName,
+                        'location' : tapLocation,
                     };
 
 
@@ -228,9 +245,8 @@ if (Meteor.isClient) {
                 } else {
                     // success! Add the tap to the taplist
                     var id = results; // returns the id of the tap created
-                    // clear the input
-                    $('#beer-name').val('');
-                    $('#beer-type').val('');
+                    // go back to taplist
+                    Router.go('/taplist/'+tapListId);
                 }
             });
 
@@ -240,14 +256,21 @@ if (Meteor.isClient) {
     Template.taps.helpers({
         'taps': function(tapListId){
             // return taps of the current tapListId
-            return Taps.find({tapList: tapListId, archived: false}, {sort: {name: 1}});
+            return Taps.find({tapList: tapListId}, {sort: {location: 1}});
         }
     });
 
-    Template.archivedTaps.helpers({
-        'archivedTaps': function(tapListId){
+    Template.archivedBevs.helpers({
+        'archivedBevs': function(tapListId){
             // return taps of the current tapListId
-            return Taps.find({tapList: tapListId, archived: true}, {sort: {name: 1}});
+            return Bevs.find({tapList: tapListId, onTap: false}, {sort: {name: 1}});
+        }
+    });
+
+    Template.bevs.helpers({
+        'bevs': function(tapListId){
+            // return taps of the current tapListId
+            return Bevs.find({tapList: tapListId}, {sort: {name: 1}});
         }
     });
 
@@ -284,8 +307,8 @@ if (Meteor.isClient) {
 
     });
 
-    Template.archivedTaps.events({
-        'click .unarchive-tap': function(e) {
+    Template.archivedBevs.events({
+        'click .unarchive-bev': function(e) {
             e.preventDefault();
             var tapId = this._id;
 
@@ -299,6 +322,33 @@ if (Meteor.isClient) {
                 }
             });
         }
+    });
+
+    Template.addBev.events({
+        'submit .add-bev': function(e) {
+            e.preventDefault();
+
+            var bevName = $('#beverage-name').val();
+            var bevType = $('#beverage-type').val();
+
+            bev = {
+                        'name' : bevName,
+                        'type' : bevType
+                    };
+
+
+            // insert a bev into the collection
+            Meteor.call("addNewBev", bev, function(error, results) {
+                if(error) {
+                    console.log(error.reason);
+                } else {
+                    // success! Add the tap to the taplist
+                    var id = results; // returns the id of the tap created
+                    console.log(id);
+                }
+            });
+
+        },
     });
 
     // global template helper
@@ -321,6 +371,10 @@ if (Meteor.isServer) {
 
     Meteor.publish("taps", function() {
         return Taps.find();
+    });
+
+    Meteor.publish("bevs", function() {
+        return Bevs.find();
     });
 
     Meteor.methods({
@@ -384,28 +438,37 @@ if (Meteor.isServer) {
         addNewTap: function(tap, parentID) {
             isLoggedIn(Meteor.userId());
 
-
             // check to make sure the value is a string
             check(tap.name, String);
 
             if(tap.name == "") {
-                throw new Meteor.Error("no-beer-name", "Yo! Enter a name for your beer.");
+                throw new Meteor.Error("no-tap-name", "Yo! Enter a name for your tap.");
+            }
+
+            // check that value is an integer
+            check(tap.location, Number);
+            if(tap.location < 1) {
+                throw new Meteor.Error("tap-location-too-low", "Yo! Enter a higher tap location value.");
+            }
+
+            if(1000 < tap.location) {
+                throw new Meteor.Error("tap-location-too-high", "Really, dawg? You got 1000 taps?");
             }
 
             // check to make sure the value is a string
             check(parentID, String);
 
             if(parentID == "") {
-                throw new Meteor.Error("no-parent-ID", "Yo! Don't delete our parentID vals. Not cool.");
+                throw new Meteor.Error("no-parent-ID", "Yo! Don't delete our vals. Not cool.");
             }
 
             var data = {
                         name: tap.name,
-                        type: tap.type,
-                        createdAt: new Date(),
+                        location: tap.location,
+                        onTap: false,
                         tapList: parentID,
-                        owner: Meteor.userId(),
-                        archived: false,
+                        createdAt: new Date(),
+                        owner: Meteor.userId()
                         }
 
             return Taps.insert(data);
@@ -420,18 +483,41 @@ if (Meteor.isServer) {
             Taps.remove(tapId);
         },
 
-        archiveTap: function(tapId) {
-            isTapOwner(Meteor.userId(), tapId);
+        addNewBev: function(bev) {
+            isLoggedIn(Meteor.userId());
 
-            Taps.update(tapId, {
+            // check to make sure the value is a string
+            check(bev.name, String);
+
+            if(bev.name == "") {
+                throw new Meteor.Error("no-bev-name", "Yo! Enter a name for your bev.");
+            }
+
+
+            var data = {
+                        name: bev.name,
+                        type: bev.type,
+                        onTap: false,
+                        createdAt: new Date(),
+                        owner: Meteor.userId(),
+                        }
+
+            return Bevs.insert(data);
+        },
+
+
+        archiveBev: function(bevId) {
+            isBevOwner(Meteor.userId(), bevId);
+
+            Bevs.update(bevId, {
                 $set : {archived: true}
             });
         },
 
-        unarchiveTap: function(tapId) {
-            isTapOwner(Meteor.userId(), tapId);
+        unarchiveBev: function(bevId) {
+            isBevOwner(Meteor.userId(), bevId);
 
-            Taps.update(tapId, {
+            Bevs.update(bevId, {
                 $set : {archived: false}
             });
         },
@@ -458,6 +544,19 @@ var isTapOwner = function(userId, tapId) {
     // if they don't own the tap, throw an error
     if(theTap.owner !== userId) {
         throw new Meteor.Error("tap-not-owned-by-user", "You don't own this Tap. What do you think you're doin', bud?.");
+    }
+
+    return true;
+}
+
+var isBevOwner = function(userId, bevId) {
+    isLoggedIn(userId);
+
+    // check to make sure that the bevlist is owned by the current user
+    theBev = Bevs.findOne({ _id: bevId });
+    // if they don't own the bev, throw an error
+    if(theBev.owner !== userId) {
+        throw new Meteor.Error("bev-not-owned-by-user", "You don't own this Beverage. What do you think you're doin', bud?.");
     }
 
     return true;

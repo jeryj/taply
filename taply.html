@@ -111,34 +111,51 @@
 </template>
 
 
+
 <template name="taps">
     <h3>{{name}}'s Taps</h3>
     <ul class="taps no-list-style block-list">
         {{#each taps _id}}
             <li>
                 <strong>{{name}}</strong><br/>
-                {{#if type}}
-                    Type: {{type}}<br/>
-                {{/if}}
                 {{#if isOwner owner}}
-                    <a href="#" class="delete-tap">Delete</a>
-                    <a href="#" class="archive-tap">Archive</a>
+                    <a href="#" class="delete-bev">Delete</a>
+                    <a href="/add-bev/" class="add-bev">Add Bev</a>
+                    <a href="#" class="archive-bev">Archive</a>
                 {{/if}}
             </li>
         {{/each}}
     </ul>
 </template>
 
-<template name="archivedTaps">
-    <h3>{{name}}'s Archived Taps</h3>
-    <ul class="archived-taps no-list-style block-list">
-        {{#each archivedTaps _id}}
+
+<template name="bevs">
+    <h3>{{name}}'s Beverages</h3>
+    <ul class="bevs no-list-style block-list">
+        {{#each bevs}}
+            <li>
+                <strong>{{name}}</strong><br/>
+                {{#if type}}
+                    Type: {{type}}<br/>
+                {{/if}}
+                {{#if isOwner owner}}
+                    <a href="#" class="delete-bev">Delete</a>
+                {{/if}}
+            </li>
+        {{/each}}
+    </ul>
+</template>
+
+<template name="archivedBevs">
+    <h3>{{name}}'s Archived Beverages</h3>
+    <ul class="archived-bevs no-list-style block-list">
+        {{#each archivedBevs _id}}
             <li>
                 {{name}}
                 {{#if isOwner owner}}
                     <br/>
-                    <a href="#" class="delete-tap">Delete</a>
-                    <a href="#" class="unarchive-tap">UnArchive</a>
+                    <a href="#" class="delete-bev">Delete</a>
+                    <a href="#" class="unarchive-bev">UnArchive</a>
                 {{/if}}
             </li>
         {{/each}}
@@ -147,14 +164,11 @@
 
 <template name="addTapForm">
     <form class="add-tap">
-        <label for="tap-name">Tap Name</label>
+        <label for="tap-name">Tap Name - Designator (Star, Circle, Red, etc)</label>
         <input id="tap-name" type="text" name="tap-name" />
 
         <label for="tap-location">Tap Position (From Left to Right)</label>
-        <input id="tap-location" type="text" name="tap-location" />
-
-        <label for="tap-designator">Tap Designator</label>
-        <input id="tap-designator" type="text" name="tap-designator" />
+        <input id="tap-location" type="number" name="tap-location" min="1" max="20"/>
 
         <input type="submit" value="Add Tap">
     </form>
@@ -162,8 +176,13 @@
 
 <template name="addBev">
     <form class="add-bev">
+
+
         <label for="beverage-type">Beverage Type? For other styles?</label>
         <input id="beverage-type" type="text" name="beverage-type" />
+
+        <label for="beverage-name">Beverage Name</label>
+        <input id="beverage-name" type="text" name="beverage-name" />
 
         <label for="bjcp-category">BJCP Category</label>
         <select id="bjcp-category" name="bjcp-category">
@@ -246,5 +265,6 @@
         <a href="{{_id}}/add-tap">Add Tap</a>
     {{/if}}
     {{> taps }}
-    {{> archivedTaps }}
+    {{> bevs }}
+    {{> archivedBevs }}
 </template>
