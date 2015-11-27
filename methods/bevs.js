@@ -23,8 +23,18 @@ Meteor.methods({
     },
 
 
+    deleteBev: function(bevId) {
+        // check permissions
+        Meteor.call("isBevOwner", Meteor.userId(), bevId);
+
+        // they own it, so... it's gone!
+        // TODO: Soft delete, probably.
+        Bevs.remove(bevId);
+    },
+
+
     archiveBev: function(bevId) {
-        isBevOwner(Meteor.userId(), bevId);
+        Meteor.call("isBevOwner", Meteor.userId(), bevId);
 
         Bevs.update(bevId, {
             $set : {archived: true}
@@ -32,7 +42,7 @@ Meteor.methods({
     },
 
     unarchiveBev: function(bevId) {
-        isBevOwner(Meteor.userId(), bevId);
+        Meteor.call("isBevOwner", Meteor.userId(), bevId);
 
         Bevs.update(bevId, {
             $set : {archived: false}

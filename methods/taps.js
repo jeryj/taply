@@ -41,7 +41,7 @@ Meteor.methods({
 
     deleteTap: function(tapId) {
         // check permissions
-        isTapOwner(Meteor.userId(), tapId);
+        Meteor.call("isTapOwner", Meteor.userId(), tapId);
 
         // they own it, so... it's gone!
         // TODO: Soft delete, probably.

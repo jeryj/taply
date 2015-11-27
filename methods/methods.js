@@ -12,10 +12,10 @@ Meteor.methods({
 
     // Some reusablections to help us out
     isTapOwner: function(userId, tapId) {
-        isLoggedIn(userId);
+        Meteor.call("isLoggedIn", userId);
 
         // check to make sure that the taplist is owned by the current user
-        theTap = Taps.findOne({ _id: tapId });
+        theTap = Taps.findOne({ _id: tapId, owner: userId });
         // if they don't own the tap, throw an error
         if(theTap.owner !== userId) {
             throw new Meteor.Error("tap-not-owned-by-user", "You don't own this Tap. What do you think you're doin', bud?.");
@@ -25,10 +25,10 @@ Meteor.methods({
     },
 
     isBevOwner: function(userId, bevId) {
-        isLoggedIn(userId);
+        Meteor.call("isLoggedIn", userId);
 
         // check to make sure that the bevlist is owned by the current user
-        theBev = Bevs.findOne({ _id: bevId });
+        theBev = Bevs.findOne({ _id: bevId, owner: userId });
         // if they don't own the bev, throw an error
         if(theBev.owner !== userId) {
             throw new Meteor.Error("bev-not-owned-by-user", "You don't own this Beverage. What do you think you're doin', bud?.");
@@ -41,7 +41,7 @@ Meteor.methods({
         Meteor.call("isLoggedIn", userId);
 
         // check to make sure that the taplist is owned by the current user
-        theTapList = TapLists.findOne({ _id: tapListId });
+        theTapList = TapLists.findOne({ _id: tapListId, owner: userId });
         // if they don't own the tap, throw an error
         if(theTapList.owner !== userId) {
             throw new Meteor.Error("taplist-not-owned-by-user", "You don't own this TapList. What do you think you're doin', bud?.");
