@@ -1,0 +1,52 @@
+<template name="tapLists">
+    <h2>TapLists</h2>
+    {{#if currentUser}}
+        {{> addTapList}}
+    {{/if}}
+    <ul class="no-list-style block-list">
+        {{#each tapList}}
+            <li><a href="/taplist/{{_id}}">{{name}}</a>
+                {{#if isOwner owner}}
+                    <a href="#" class="delete-taplist">Delete</a>
+                    <a href="#" class="archive-taplist">Archive</a>
+                {{/if}}
+            </li>
+        {{/each}}
+    </ul>
+
+    {{> archivedTapLists }}
+</template>
+
+<template name="tapListPage">
+    <h2>TapList: {{name}}</h2>
+    {{#if currentUser}}
+        <a href="{{_id}}/add-tap">Add Tap</a>
+    {{/if}}
+    {{> taps }}
+    {{> bevs }}
+    {{> archivedBevs }}
+</template>
+
+<template name="archivedTapLists">
+    <h3>Archived TapLists</h3>
+    <ul class="no-list-style block-list">
+        {{#each archivedTapList}}
+            <li><a href="/taplist/{{_id}}">{{name}}</a>
+                {{#if isOwner owner}}
+                    <a href="#" class="delete-taplist">Delete</a>
+                    <a href="#" class="unarchive-taplist">UnArchive</a>
+                {{/if}}
+            </li>
+        {{/each}}
+    </ul>
+</template>
+
+
+<template name="addTapList">
+    <form class="add-TapList">
+        <label for="name">TapList Name</label>
+        <input id="name" type="text" name="name">
+
+        <input type="submit" value="Create Tap List">
+    </form>
+</template>

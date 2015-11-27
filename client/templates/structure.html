@@ -1,0 +1,31 @@
+<head>
+  <title>taply</title>
+</head>
+
+<body>
+<!-- don't put anything in the body. use iron router to do this -->
+</body>
+
+
+
+<template name="main">
+    {{> navigation}}
+    {{> yield}}
+</template>
+
+<template name="navigation">
+    <nav>
+        <ul class="no-list-style inline-nav">
+            <li><a href="{{pathFor route='home'}}">Home</a></li>
+            <li><a href="{{pathFor route='about'}}">About</a></li>
+            <li><a href="{{pathFor route='tapLists'}}">TapLists</a></li>
+            {{#if currentUser}}
+                <li><a href="#" class="logout">Logout</a></li>
+            {{else}}
+                <li><a href="{{pathFor route='register'}}">Register</a></li>
+                <li><a href="{{pathFor route='login'}}">Login</a></li>
+            {{/if}}
+        </ul>
+    </nav>
+</template>
+
