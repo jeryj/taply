@@ -39,6 +39,19 @@ Meteor.methods({
         return Taps.insert(data);
     },
 
+    editTap: function(tap, tapId) {
+        Meteor.call("isTapOwner", Meteor.userId(), tapId);
+
+        var data = {
+          name: tap.name,
+          location: tap.location
+        }
+
+        Taps.update(tapId, {
+          $set : data
+        });
+    },
+
     deleteTap: function(tapId) {
         // check permissions
         Meteor.call("isTapOwner", Meteor.userId(), tapId);

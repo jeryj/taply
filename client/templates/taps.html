@@ -27,6 +27,7 @@
                 <br/>
                 {{#if isOwner owner}}
                     <a href="#" class="delete-tap">Delete Tap</a>
+                    <a href="/taplist/edit-tap/{{_id}}" class="edit-tap">Edit Tap</a>
                 {{/if}}
             </li>
         {{/each}}
@@ -38,7 +39,6 @@
     {{> addTapForm}}
 </template>
 
-
 <template name="addTapForm">
     <form class="add-tap">
         <label for="tap-name">Tap Name - Designator (Star, Circle, Red, etc)</label>
@@ -48,5 +48,22 @@
         <input id="tap-location" type="number" name="tap-location" min="1" max="20"/>
 
         <input type="submit" value="Add Tap">
+    </form>
+</template>
+
+<template name="editTap">
+    <h3>Edit Tap: {{name}}</h3>
+    {{> editTapForm}}
+</template>
+
+<template name="editTapForm">
+    <form class="edit-tap">
+        <label for="tap-name">Tap Name - Designator (Star, Circle, Red, etc)</label>
+        <input id="tap-name" type="text" name="tap-name" value="{{name}}"/>
+
+        <label for="tap-location">Tap Position (From Left to Right)</label>
+        <input id="tap-location" type="number" name="tap-location" min="1" max="20" value="{{location}}"/>
+
+        <input type="submit" value="Edit Tap">
     </form>
 </template>

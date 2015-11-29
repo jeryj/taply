@@ -29,6 +29,39 @@ Template.addTapForm.events({
     },
 });
 
+Template.editTapForm.events({
+    'submit .edit-tap': function(e) {
+        e.preventDefault();
+        var tapId = this._id;
+
+        var tapName = $('#tap-name').val();
+        var tapLocation = $('#tap-location').val();
+        tapLocation = parseInt(tapLocation, 10);
+        var tapDesignator = $('#tap-designator').val();
+
+        tap = {
+                    'name' : tapName,
+                    'location' : tapLocation,
+                };
+
+
+        // insert a tap into the collection
+        Meteor.call("editTap", tap, tapId, function(error, results) {
+            if(error) {
+                console.log(error.reason);
+            } else {
+                // success! Add the tap to the taplist
+                var id = results; // returns the id of the tap created
+                // go back to taplist
+                var tap = Taps.findOne({_id: tapId});
+                console.log(tap);
+                Router.go('/taplist/'+tap.tapList);
+            }
+        });
+
+    },
+});
+
 Template.taps.helpers({
     'taps': function(tapListId){
         // return taps of the current tapListId
