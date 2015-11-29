@@ -4,7 +4,6 @@
         {{#each taps _id}}
             <li>
                 Tap: <strong>{{name}}</strong><br/>
-                {{_id}}
                 {{#if isOnTap _id}}
                     {{#each isOnTap _id}}
                         Bev: <strong>{{name}}</strong>
@@ -12,7 +11,7 @@
                             <a href="remove-bev-from-tap">Remove Bev</a>
                         {{/if}}
                     {{/each}}
-                    {{_id}}
+                    IS ON TAP TRUE
                 {{ else }}
                     {{#if isOwner owner}}
                         <form class="put-on-tap">
@@ -24,6 +23,7 @@
                             <input type="submit" value="Put On Tap">
                         </form>
                     {{/if}}
+                    IS ON TAP FALSE
                 {{/if}}
                 <br/>
                 {{#if isOwner owner}}

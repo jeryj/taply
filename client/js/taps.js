@@ -36,9 +36,9 @@ Template.taps.helpers({
     },
 
     'isOnTap': function(tapId) {
-        var whatsOnTap = Bevs.find({onTap: tapId});
-
-        if(whatsOnTap != false) {
+        var whatsOnTap = Bevs.findOne({onTap: tapId});
+        console.log(whatsOnTap);
+        if(whatsOnTap !== null) {
             return whatsOnTap;
         }
 
