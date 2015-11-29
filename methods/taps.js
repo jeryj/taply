@@ -51,12 +51,6 @@ Meteor.methods({
     putOnTap: function(tapId, bevId) {
         // check permissions
         Meteor.call("isTapOwner", Meteor.userId(), tapId);
-        Meteor.call("isBevOwner", Meteor.userId(), bevId);
-
-        // put it on tap
-        Bevs.update(bevId, {
-            $set : {onTap: tapId}
-        });
 
         Taps.update(tapId, {
             $set : {onTap: bevId}
@@ -64,16 +58,8 @@ Meteor.methods({
 
     },
 
-    tapEmpty: function(tapId, bevId) {
+    removeBevFromTap: function(tapId) {
         Meteor.call("isTapOwner", Meteor.userId(), tapId);
-
-        if(bevId != false) {
-            Meteor.call("isBevOwner", Meteor.userId(), bevId);
-
-            Bevs.update(bevId, {
-                $set : {onTap: false}
-            });
-        }
 
         Taps.update(tapId, {
             $set : {onTap: false}

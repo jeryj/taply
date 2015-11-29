@@ -35,15 +35,16 @@ Template.taps.helpers({
         return Taps.find({tapList: tapListId}, {sort: {location: 1}});
     },
 
-    'isOnTap': function(tapId) {
-        var whatsOnTap = Bevs.findOne({onTap: tapId});
-        console.log(whatsOnTap);
-        if(whatsOnTap !== null) {
-            return whatsOnTap;
-        }
+    'whatsOnTap': function(bevId) {
 
-        return false;
-    }
+      var whatsOnTap = Bevs.findOne({_id: bevId});
+      console.log(whatsOnTap);
+      if(whatsOnTap !== null) {
+          return whatsOnTap;
+      }
+
+      return false;
+    },
 
 });
 
@@ -60,6 +61,22 @@ Template.taps.events({
             } else {
                 // success!
                 console.log('Deleted '+tapId);
+            }
+        });
+    },
+
+    'click .remove-bev-from-tap': function(e) {
+        e.preventDefault();
+        var tapId = this._id;
+
+        // TODO: Give some kind of warning message
+
+        Meteor.call("removeBevFromTap", tapId, function(error, results) {
+            if(error) {
+                console.log(error.reason);
+            } else {
+                // success!
+                console.log('Removed bev from ' +tapId);
             }
         });
     },

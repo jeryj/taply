@@ -4,14 +4,14 @@
         {{#each taps _id}}
             <li>
                 Tap: <strong>{{name}}</strong><br/>
-                {{#if isOnTap _id}}
-                    {{#each isOnTap _id}}
+                {{#if onTap}}
+                    {{#with whatsOnTap onTap}}
                         Bev: <strong>{{name}}</strong>
-                        {{#if isOwner owner}}
-                            <a href="remove-bev-from-tap">Remove Bev</a>
-                        {{/if}}
-                    {{/each}}
-                    IS ON TAP TRUE
+                    {{/with}}
+                    {{#if isOwner owner}}
+                        <a class="remove-bev-from-tap" href="#">Remove Bev</a>
+                    {{/if}}
+
                 {{ else }}
                     {{#if isOwner owner}}
                         <form class="put-on-tap">
@@ -23,7 +23,6 @@
                             <input type="submit" value="Put On Tap">
                         </form>
                     {{/if}}
-                    IS ON TAP FALSE
                 {{/if}}
                 <br/>
                 {{#if isOwner owner}}
