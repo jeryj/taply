@@ -44,9 +44,8 @@ Template.bevs.events({
 });
 
 Template.bevs.helpers({
-    'bevs': function(tapListId){
-        // return taps of the current tapListId
-        return Bevs.find({tapList: tapListId}, {sort: {name: 1}});
+    'bevs': function(){
+        return Bevs.find({owner: Meteor.userId()}, {sort: {name: 1}});
     }
 });
 

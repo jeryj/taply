@@ -7,3 +7,8 @@ Template.registerHelper('isOwner', function(owner) {
 
     return isOwner;
 });
+
+Template.registerHelper('ownerBevs', function(owner){
+    return Bevs.find({owner: owner}, {sort: {name: 1}});
+});
+

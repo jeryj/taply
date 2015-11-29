@@ -30,9 +30,14 @@ Meteor.methods({
         // check to make sure that the bevlist is owned by the current user
         theBev = Bevs.findOne({ _id: bevId, owner: userId });
         // if they don't own the bev, throw an error
-        if(theBev.owner !== userId) {
-            throw new Meteor.Error("bev-not-owned-by-user", "You don't own this Beverage. What do you think you're doin', bud?.");
+        if(theBev !== undefined) {
+            if(theBev.owner !== userId) {
+                throw new Meteor.Error("bev-not-owned-by-user", "You don't own this Beverage. What do you think you're doin', bud?.");
+            }
+        } else {
+            throw new Meteor.Error("bev-not-found", "Bev not found.");
         }
+
 
         return true;
     },

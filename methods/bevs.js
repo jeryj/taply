@@ -33,20 +33,4 @@ Meteor.methods({
     },
 
 
-    archiveBev: function(bevId) {
-        Meteor.call("isBevOwner", Meteor.userId(), bevId);
-
-        Bevs.update(bevId, {
-            $set : {archived: true}
-        });
-    },
-
-    unarchiveBev: function(bevId) {
-        Meteor.call("isBevOwner", Meteor.userId(), bevId);
-
-        Bevs.update(bevId, {
-            $set : {archived: false}
-        });
-    },
-
 });

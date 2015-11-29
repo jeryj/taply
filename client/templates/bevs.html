@@ -1,5 +1,5 @@
 <template name="bevs">
-    <h3>{{name}}'s Beverages</h3>
+    <h3>Current User's Beverages</h3>
     <ul class="bevs no-list-style block-list">
         {{#each bevs}}
             <li>
@@ -16,7 +16,7 @@
 </template>
 
 <template name="archivedBevs">
-    <h3>{{name}}'s Archived Beverages</h3>
+    <h3>Current User's Archived Beverages</h3>
     <ul class="archived-bevs no-list-style block-list">
         {{#each archivedBevs _id}}
             <li>

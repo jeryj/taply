@@ -3,9 +3,31 @@
     <ul class="taps no-list-style block-list">
         {{#each taps _id}}
             <li>
-                <strong>{{name}}</strong><br/>
+                Tap: <strong>{{name}}</strong><br/>
+                {{_id}}
+                {{#if isOnTap _id}}
+                    {{#each isOnTap _id}}
+                        Bev: <strong>{{name}}</strong>
+                        {{#if isOwner owner}}
+                            <a href="remove-bev-from-tap">Remove Bev</a>
+                        {{/if}}
+                    {{/each}}
+                    {{_id}}
+                {{ else }}
+                    {{#if isOwner owner}}
+                        <form class="put-on-tap">
+                            <select class="put-on-tap-bev-list">
+                            {{#each ownerBevs owner}}
+                                <option data-bevID="{{_id}}">{{name}}</option>
+                            {{/each}}
+                            </select>
+                            <input type="submit" value="Put On Tap">
+                        </form>
+                    {{/if}}
+                {{/if}}
+                <br/>
                 {{#if isOwner owner}}
-                    <a href="#" class="delete-tap">Delete</a>
+                    <a href="#" class="delete-tap">Delete Tap</a>
                 {{/if}}
             </li>
         {{/each}}

@@ -33,7 +33,18 @@ Template.taps.helpers({
     'taps': function(tapListId){
         // return taps of the current tapListId
         return Taps.find({tapList: tapListId}, {sort: {location: 1}});
+    },
+
+    'isOnTap': function(tapId) {
+        var whatsOnTap = Bevs.find({onTap: tapId});
+
+        if(whatsOnTap != false) {
+            return whatsOnTap;
+        }
+
+        return false;
     }
+
 });
 
 Template.taps.events({
@@ -53,16 +64,19 @@ Template.taps.events({
         });
     },
 
-    'click .archive-tap': function(e) {
+    'submit .put-on-tap': function(e) {
         e.preventDefault();
         var tapId = this._id;
+        var form = event.target;
 
-        Meteor.call("archiveTap", tapId, function(error, results) {
+        var bevId = $('.put-on-tap-bev-list option:selected', form).attr('data-bevID')
+
+        Meteor.call("putOnTap", tapId, bevId, function(error, results) {
             if(error) {
                 console.log(error.reason);
             } else {
                 // success!
-                console.log('Archived '+tapId);
+                console.log('Put on Tap '+bevId);
             }
         });
     },
