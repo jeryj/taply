@@ -1,18 +1,21 @@
 <template name="bevs">
-    <h3>Current User's Beverages</h3>
     <ul class="bevs no-list-style block-list">
         {{#each bevs}}
-            <li>
-                <strong>{{name}}</strong><br/>
-                {{#if type}}
-                    Type: {{type}}<br/>
-                {{/if}}
-                {{#if isOwner owner}}
-                    <a href="#" class="delete-bev">Delete</a>
-                {{/if}}
-            </li>
+            {{> bevLI}}
         {{/each}}
     </ul>
+</template>
+
+<template name="bevLI">
+  <li>
+      <strong>{{name}}</strong><br/>
+      {{#if type}}
+          Type: {{type}}<br/>
+      {{/if}}
+      {{#if isOwner owner}}
+          <a href="#" class="delete-bev">Delete</a>
+      {{/if}}
+  </li>
 </template>
 
 <template name="archivedBevs">

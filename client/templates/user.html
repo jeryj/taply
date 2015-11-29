@@ -1,3 +1,17 @@
 <template name="user">
-  {{>bevs}}
+  <h3>Your TapLists</h3>
+  <ul class="taplists-list taplists--user no-list-style block-list">
+    {{#each userTapLists username}}
+      {{> tapListLI}}
+    {{/each}}
+  </ul>
+
+  <h3>Your Bevs</h3>
+  <p><a href="{{pathFor route='addBev'}}">Add Bev</a></p>
+  <ul class="bevs-lisst bevs-list--user no-list-style block-list">
+    {{#each userBevs username}}
+      {{> bevLI}}
+    {{/each}}
+  </ul>
+
 </template>

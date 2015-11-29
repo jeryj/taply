@@ -48,28 +48,3 @@ Template.bevs.helpers({
         return Bevs.find({owner: Meteor.userId()}, {sort: {name: 1}});
     }
 });
-
-Template.archivedBevs.helpers({
-    'archivedBevs': function(tapListId){
-        // return taps of the current tapListId
-        return Bevs.find({tapList: tapListId, onTap: false}, {sort: {name: 1}});
-    }
-});
-
-Template.archivedBevs.events({
-    'click .unarchive-bev': function(e) {
-        e.preventDefault();
-        var tapId = this._id;
-
-        // TODO: Give some kind of warning message
-        Meteor.call("unarchiveTap", tapId, function(error, results) {
-            if(error) {
-                console.log(error.reason);
-            } else {
-                // success!
-                console.log('Unarchived '+tapId);
-            }
-        });
-    }
-});
-

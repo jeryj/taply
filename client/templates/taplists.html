@@ -5,26 +5,27 @@
     {{/if}}
     <ul class="no-list-style block-list">
         {{#each tapList}}
-            <li><a href="/taplist/{{_id}}">{{name}}</a>
-                {{#if isOwner owner}}
-                    <a href="#" class="delete-taplist">Delete</a>
-                    <a href="#" class="archive-taplist">Archive</a>
-                {{/if}}
-            </li>
+            {{>tapListLI}}
         {{/each}}
     </ul>
 
     {{> archivedTapLists }}
 </template>
 
+<template name="tapListLI">
+  <li><a href="/taplist/{{_id}}">{{name}}</a>
+      {{#if isOwner owner}}
+          <a href="#" class="delete-taplist">Delete</a>
+          <a href="#" class="archive-taplist">Archive</a>
+      {{/if}}
+  </li>
+</template>
+
 <template name="tapListPage">
     <h2>TapList: {{name}}</h2>
-    {{#if currentUser}}
-        <a href="{{_id}}/add-tap">Add Tap</a>
-    {{/if}}
     {{> taps }}
+    <h3>Your Bevs</h3>
     {{> bevs }}
-    {{> archivedBevs }}
 </template>
 
 <template name="archivedTapLists">

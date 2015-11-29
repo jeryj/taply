@@ -1,3 +1,7 @@
+Accounts.ui.config({
+    passwordSignupFields: 'USERNAME_AND_EMAIL'
+});
+
 Template.register.events({
     'submit form': function(e) {
         e.preventDefault();
@@ -5,11 +9,13 @@ Template.register.events({
         // Get the values
         var email = $('[name=email]').val();
         var password = $('[name=password]').val();
+        var username = $('[name=username]').val();
 
         // Create the user
         Accounts.createUser({
             email: email,
-            password: password
+            password: password,
+            username: username,
         }, function(error){
             if(error){
                 console.log(error.reason); // Output error if registration fails

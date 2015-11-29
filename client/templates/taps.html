@@ -31,6 +31,9 @@
                 {{/if}}
             </li>
         {{/each}}
+        {{#if currentUser}}
+            <li><a href="{{_id}}/add-tap">Add Tap</a></li>
+        {{/if}}
     </ul>
 </template>
 

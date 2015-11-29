@@ -2,7 +2,6 @@ Template.tapLists.helpers({
     'tapList': function(){
         return TapLists.find({archived: false}, {sort: {name: 1}});
     },
-
 });
 
 Template.archivedTapLists.helpers({
