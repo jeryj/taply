@@ -33,7 +33,7 @@ Meteor.methods({
                     onTap: false,
                     tapList: parentID,
                     createdAt: new Date(),
-                    owner: Meteor.userId()
+                    owner: Meteor.user().username
                     }
 
         return Taps.insert(data);
