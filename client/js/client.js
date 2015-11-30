@@ -8,6 +8,6 @@ Template.registerHelper('isOwner', function(ownerId) {
     return isOwner;
 });
 
-Template.registerHelper('ownerBevs', function(owner){
-    return Bevs.find({owner: owner}, {sort: {name: 1}});
+Template.registerHelper('ownerBevs', function(ownerId){
+    return Bevs.find({ownerId: ownerId}, {sort: {name: 1}});
 });

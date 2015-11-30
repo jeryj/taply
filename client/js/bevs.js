@@ -17,15 +17,15 @@ Template.addBev.events({
                 console.log(error.reason);
             } else {
                 // success! Add the tap to the taplist
-                var id = results; // returns the id of the tap created
-                console.log(id);
+                var newBev = results; // returns the id of the tap created
+                Router.go('/user/'+newBev.owner);
             }
         });
 
     },
 });
 
-Template.bevs.events({
+Template.bevLI.events({
     'click .delete-bev': function(e) {
         e.preventDefault();
         var bevId = this._id;

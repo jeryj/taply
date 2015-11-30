@@ -20,10 +20,10 @@ Template.addTapForm.events({
                 console.log(error.reason);
             } else {
                 // success! Add the tap to the taplist
-                var id = results; // returns the id of the tap created
+                var newTap = results; // returns the id of the tap created
+                var tapList = TapLists.findOne({_id: newTap.tapList});
                 // go back to taplist
-                var tapList = TapLists.findOne({_id: tapListId});
-                Router.go('/taplist/'+Meteor.user().username+'/'+tapList.name);
+                Router.go('/taplist/'+newTap.owner+'/'+tapList.name);
             }
         });
 
@@ -54,9 +54,10 @@ Template.editTapForm.events({
                 // success! Add the tap to the taplist
                 var id = results; // returns the id of the tap created
                 // go back to taplist
-                var tap = Taps.findOne({_id: tapId});
-                console.log(tap);
-                Router.go('/taplist/'+tap.tapList);
+                var editedTap = results;
+                var tapList = TapLists.findOne({_id: editedTap.tapList});
+
+                Router.go('/taplist/'+editedTap.owner+'/'+tapList.name);
             }
         });
 
@@ -120,7 +121,7 @@ Template.taps.events({
         var tapId = this._id;
         var form = event.target;
 
-        var bevId = $('.put-on-tap-bev-list option:selected', form).attr('data-bevID')
+        var bevId = $('.put-on-tap-bev-list option:selected', form).attr('data-bevID');
 
         Meteor.call("putOnTap", tapId, bevId, function(error, results) {
             if(error) {

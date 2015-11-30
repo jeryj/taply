@@ -20,7 +20,8 @@ Meteor.methods({
                     ownerId: Meteor.userId(),
                     }
 
-        return Bevs.insert(data);
+        var newBev = Bevs.insert(data);
+        return Bevs.findOne({_id: newBev});
     },
 
 

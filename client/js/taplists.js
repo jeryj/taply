@@ -10,7 +10,7 @@ Template.archivedTapLists.helpers({
     },
 });
 
-Template.tapLists.events({
+Template.tapListLI.events({
     'click .delete-taplist': function(e) {
         e.preventDefault();
         var tapListId = this._id;
@@ -40,7 +40,9 @@ Template.tapLists.events({
             }
         });
     },
+});
 
+Template.archivedTapLists.events({
     'click .unarchive-taplist': function(e) {
         e.preventDefault();
         var tapListId = this._id;

@@ -12,7 +12,7 @@
       {{#if type}}
           Type: {{type}}<br/>
       {{/if}}
-      {{#if isOwner owner}}
+      {{#if isOwner ownerId}}
           <a href="#" class="delete-bev">Delete</a>
       {{/if}}
   </li>
@@ -24,7 +24,7 @@
         {{#each archivedBevs _id}}
             <li>
                 {{name}}
-                {{#if isOwner owner}}
+                {{#if isOwner ownerId}}
                     <br/>
                     <a href="#" class="delete-bev">Delete</a>
                     <a href="#" class="unarchive-bev">UnArchive</a>

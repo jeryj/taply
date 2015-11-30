@@ -28,16 +28,18 @@ Meteor.methods({
         }
 
         var data = {
-                    name: tap.name,
-                    location: tap.location,
-                    onTap: false,
-                    tapList: parentID,
-                    createdAt: new Date(),
-                    owner: Meteor.user().username,
-                    ownerId: Meteor.userId()
-                    }
+                        name: tap.name,
+                        location: tap.location,
+                        onTap: false,
+                        tapList: parentID,
+                        createdAt: new Date(),
+                        owner: Meteor.user().username,
+                        ownerId: Meteor.userId()
+                    };
 
-        return Taps.insert(data);
+        var newTapId = Taps.insert(data);
+
+        return Taps.findOne({_id: newTapId});
     },
 
     editTap: function(tap, tapId) {
@@ -46,11 +48,13 @@ Meteor.methods({
         var data = {
           name: tap.name,
           location: tap.location
-        }
+        };
 
         Taps.update(tapId, {
           $set : data
         });
+
+        return Taps.findOne({_id: tapId});
     },
 
     deleteTap: function(tapId) {

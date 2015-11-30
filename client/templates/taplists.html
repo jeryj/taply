@@ -14,7 +14,7 @@
 
 <template name="tapListLI">
   <li><a href="/taplist/{{owner}}/{{name}}">{{name}}</a>
-      {{#if isOwner owner}}
+      {{#if isOwner ownerId}}
           <a href="#" class="delete-taplist">Delete</a>
           <a href="#" class="archive-taplist">Archive</a>
       {{/if}}
@@ -32,8 +32,8 @@
     <h3>Archived TapLists</h3>
     <ul class="no-list-style block-list">
         {{#each archivedTapList}}
-            <li><a href="/taplist/{{_id}}">{{name}}</a>
-                {{#if isOwner owner}}
+            <li><a href="/taplist/{{owner}}/{{name}}">{{name}}</a>
+                {{#if isOwner ownerId}}
                     <a href="#" class="delete-taplist">Delete</a>
                     <a href="#" class="unarchive-taplist">UnArchive</a>
                 {{/if}}

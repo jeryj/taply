@@ -1,7 +1,7 @@
 Meteor.methods({
 
     defaultName: function(currentUser) {
-        var nextLetter = 'A'
+        var nextLetter = 'A';
         var nextName = 'TapList ' + nextLetter;
         while (TapLists.findOne({ name: nextName, ownerId: currentUser })) {
             nextLetter = String.fromCharCode(nextLetter.charCodeAt(0) + 1);
@@ -37,7 +37,6 @@ Meteor.methods({
         } else {
             throw new Meteor.Error("bev-not-found", "Bev not found.");
         }
-
 
         return true;
     },
