@@ -68,7 +68,7 @@ Template.addTapList.events({
             } else {
                 // send them to the page they created
                 var id = results; // returns the id of the page created
-                var taplistURL = '/taplist/'+id;
+                var taplistURL = '/taplist/'+Meteor.user().username+'/'+tapListName;
                 Router.go(taplistURL);
             }
         });

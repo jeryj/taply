@@ -45,6 +45,6 @@ Template.bevs.events({
 
 Template.bevs.helpers({
     'bevs': function(){
-        return Bevs.find({owner: Meteor.userId()}, {sort: {name: 1}});
+        return Bevs.find({owner: Meteor.user().username}, {sort: {name: 1}});
     }
 });

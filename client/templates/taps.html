@@ -1,21 +1,22 @@
 <template name="taps">
     <ul class="taps no-list-style block-list">
         {{#each taps _id}}
+        {{ownerId}}
             <li>
                 Tap: <strong>{{name}}</strong><br/>
                 {{#if onTap}}
                     {{#with whatsOnTap onTap}}
                         Bev: <strong>{{name}}</strong>
                     {{/with}}
-                    {{#if isOwner owner}}
+                    {{#if isOwner ownerId}}
                         <a class="remove-bev-from-tap" href="#">Remove Bev</a>
                     {{/if}}
 
                 {{ else }}
-                    {{#if isOwner owner}}
+                    {{#if isOwner ownerId}}
                         <form class="put-on-tap">
                             <select class="put-on-tap-bev-list">
-                            {{#each ownerBevs owner}}
+                            {{#each ownerBevs ownerId}}
                                 <option data-bevID="{{_id}}">{{name}}</option>
                             {{/each}}
                             </select>
@@ -24,14 +25,14 @@
                     {{/if}}
                 {{/if}}
                 <br/>
-                {{#if isOwner owner}}
+                {{#if isOwner ownerId}}
                     <a href="#" class="delete-tap">Delete Tap</a>
                     <a href="/taplist/edit-tap/{{_id}}" class="edit-tap">Edit Tap</a>
                 {{/if}}
             </li>
         {{/each}}
         {{#if currentUser}}
-            <li><a href="{{_id}}/add-tap">Add Tap</a></li>
+            <li><a href="{{name}}/add-tap">Add Tap</a></li>
         {{/if}}
     </ul>
 </template>

@@ -17,7 +17,8 @@ Meteor.methods({
         var data = {
                     name: tapListName,
                     createdAt: new Date(),
-                    owner: Meteor.userId(),
+                    owner: Meteor.user().username,
+                    ownerId: Meteor.userId(),
                     archived: false,
                     }
 
@@ -57,4 +58,3 @@ Meteor.methods({
     },
 
 });
-

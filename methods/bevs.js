@@ -16,7 +16,8 @@ Meteor.methods({
                     type: bev.type,
                     onTap: false,
                     createdAt: new Date(),
-                    owner: Meteor.userId(),
+                    owner: Meteor.user().username,
+                    ownerId: Meteor.userId(),
                     }
 
         return Bevs.insert(data);

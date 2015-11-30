@@ -22,7 +22,8 @@ Template.addTapForm.events({
                 // success! Add the tap to the taplist
                 var id = results; // returns the id of the tap created
                 // go back to taplist
-                Router.go('/taplist/'+tapListId);
+                var tapList = TapLists.findOne({_id: tapListId});
+                Router.go('/taplist/'+Meteor.user().username+'/'+tapList.name);
             }
         });
 

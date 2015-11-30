@@ -1,7 +1,7 @@
 // global template helper
-Template.registerHelper('isOwner', function(owner) {
+Template.registerHelper('isOwner', function(ownerId) {
     var isOwner = false;
-    if(Meteor.userId() === owner) {
+    if(Meteor.userId() === ownerId) {
         isOwner = true;
     }
 
@@ -11,4 +11,3 @@ Template.registerHelper('isOwner', function(owner) {
 Template.registerHelper('ownerBevs', function(owner){
     return Bevs.find({owner: owner}, {sort: {name: 1}});
 });
-
