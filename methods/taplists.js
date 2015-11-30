@@ -9,7 +9,7 @@ Meteor.methods({
         check(tapListName, String);
 
         // if they submitted an empty form (via console), create a new name for them
-        if(tapListName == ""){
+        if(tapListName === ""){
             tapListName = defaultName(currentUser);
         }
 
@@ -20,7 +20,7 @@ Meteor.methods({
                     owner: Meteor.user().username,
                     ownerId: Meteor.userId(),
                     archived: false,
-                    }
+                };
 
         // using return statement so it'll pass back to the function that called this
         return TapLists.insert(data);
