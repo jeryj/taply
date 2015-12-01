@@ -1,7 +1,7 @@
 <template name="taps">
-    <ul class="taps no-list-style block-list">
+    <ul class="taps no-list-style">
         {{#each taps _id}}
-            <li>
+            <li class="tap">
                 <span class="tap-number">{{tapCount @index}}</span>
                 {{#if onTap}}
                     {{#with whatsOnTap onTap}}

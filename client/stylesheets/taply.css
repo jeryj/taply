@@ -21,7 +21,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 .block-list li {
-    margin-bottom: 1.2em;
+    padding: 0.8em 0;
 }
 
 label {
@@ -45,4 +45,25 @@ input {
     border-radius: 2px;
     border: 1px solid #ccc;
     margin: .2em 0 .6em;
+}
+
+.tap {
+    position: relative;
+    padding: 1em 0 1em 2.6em;
+    left: -2.6em;
+}
+
+.tap:nth-child(even) {
+    background: #f8f8f8;
+}
+
+.tap-number {
+    position: absolute;
+    width: 1.6em;
+    padding-right: 0.2em;
+    left: 0;
+    top: 0.8em;
+    text-align: right;
+    font-size: 1.2em;
+    color: #888;
 }
