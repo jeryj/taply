@@ -2,16 +2,17 @@
     <ul class="taps no-list-style block-list">
         {{#each taps _id}}
             <li>
-                Tap: <strong>{{name}}</strong><br/>
+                {{location}}:
                 {{#if onTap}}
                     {{#with whatsOnTap onTap}}
-                        Bev: <strong>{{name}}</strong>
+                        <strong>{{name}}</strong>
                     {{/with}}
                     {{#if isOwner ownerId}}
                         <a class="remove-bev-from-tap" href="#">Remove Bev</a>
                     {{/if}}
 
                 {{ else }}
+                    Empty
                     {{#if isOwner ownerId}}
                         <form class="put-on-tap">
                             <select class="put-on-tap-bev-list">
@@ -26,7 +27,6 @@
                 <br/>
                 {{#if isOwner ownerId}}
                     <a href="#" class="delete-tap">Delete Tap</a>
-                    <a href="/taplist/edit-tap/{{_id}}" class="edit-tap">Edit Tap</a>
                 {{/if}}
             </li>
         {{/each}}
@@ -43,29 +43,9 @@
 
 <template name="addTapForm">
     <form class="add-tap">
-        <label for="tap-name">Tap Name - Designator (Star, Circle, Red, etc)</label>
-        <input id="tap-name" type="text" name="tap-name" />
-
         <label for="tap-location">Tap Position (From Left to Right)</label>
         <input id="tap-location" type="number" name="tap-location" min="1" max="20"/>
 
         <input type="submit" value="Add Tap">
-    </form>
-</template>
-
-<template name="editTap">
-    <h3>Edit Tap: {{name}}</h3>
-    {{> editTapForm}}
-</template>
-
-<template name="editTapForm">
-    <form class="edit-tap">
-        <label for="tap-name">Tap Name - Designator (Star, Circle, Red, etc)</label>
-        <input id="tap-name" type="text" name="tap-name" value="{{name}}"/>
-
-        <label for="tap-location">Tap Position (From Left to Right)</label>
-        <input id="tap-location" type="number" name="tap-location" min="1" max="20" value="{{location}}"/>
-
-        <input type="submit" value="Edit Tap">
     </form>
 </template>

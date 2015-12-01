@@ -3,13 +3,10 @@ Template.addTapForm.events({
         e.preventDefault();
         var tapListId = this._id;
 
-        var tapName = $('#tap-name').val();
         var tapLocation = $('#tap-location').val();
         tapLocation = parseInt(tapLocation, 10);
-        var tapDesignator = $('#tap-designator').val();
 
         tap = {
-                    'name' : tapName,
                     'location' : tapLocation,
                 };
 
@@ -24,40 +21,6 @@ Template.addTapForm.events({
                 var tapList = TapLists.findOne({_id: newTap.tapList});
                 // go back to taplist
                 Router.go('/taplist/'+newTap.owner+'/'+tapList.name);
-            }
-        });
-
-    },
-});
-
-Template.editTapForm.events({
-    'submit .edit-tap': function(e) {
-        e.preventDefault();
-        var tapId = this._id;
-
-        var tapName = $('#tap-name').val();
-        var tapLocation = $('#tap-location').val();
-        tapLocation = parseInt(tapLocation, 10);
-        var tapDesignator = $('#tap-designator').val();
-
-        tap = {
-                    'name' : tapName,
-                    'location' : tapLocation,
-                };
-
-
-        // insert a tap into the collection
-        Meteor.call("editTap", tap, tapId, function(error, results) {
-            if(error) {
-                console.log(error.reason);
-            } else {
-                // success! Add the tap to the taplist
-                var id = results; // returns the id of the tap created
-                // go back to taplist
-                var editedTap = results;
-                var tapList = TapLists.findOne({_id: editedTap.tapList});
-
-                Router.go('/taplist/'+editedTap.owner+'/'+tapList.name);
             }
         });
 

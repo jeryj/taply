@@ -3,13 +3,6 @@ Meteor.methods({
     addNewTap: function(tap, parentID) {
         Meteor.call("isLoggedIn", Meteor.userId());
 
-        // check to make sure the value is a string
-        check(tap.name, String);
-
-        if(tap.name === "") {
-            throw new Meteor.Error("no-tap-name", "Yo! Enter a name for your tap.");
-        }
-
         // check that value is an integer
         check(tap.location, Number);
         if(tap.location < 1) {
@@ -28,7 +21,6 @@ Meteor.methods({
         }
 
         var data = {
-                        name: tap.name,
                         location: tap.location,
                         onTap: false,
                         tapList: parentID,
@@ -40,21 +32,6 @@ Meteor.methods({
         var newTapId = Taps.insert(data);
 
         return Taps.findOne({_id: newTapId});
-    },
-
-    editTap: function(tap, tapId) {
-        Meteor.call("isTapOwner", Meteor.userId(), tapId);
-
-        var data = {
-          name: tap.name,
-          location: tap.location
-        };
-
-        Taps.update(tapId, {
-          $set : data
-        });
-
-        return Taps.findOne({_id: tapId});
     },
 
     deleteTap: function(tapId) {
