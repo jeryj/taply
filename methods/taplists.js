@@ -14,8 +14,19 @@ Meteor.methods({
         }
 
         // create the slug
+        var slug = Meteor.call("slugify", tapListName);
+        check(slug, String);
+        // check to make sure it's unique for this user
+        var duplicate = TapLists.findOne({slug: slug, owner: Meteor.user().username});
+
+        if(duplicate) {
+            throw new Meteor.Error("duplicate-slug", "You already have a taplist with this name.");
+        }
+
+
         var data = {
                     name: tapListName,
+                    slug: slug,
                     createdAt: new Date(),
                     owner: Meteor.user().username,
                     ownerId: Meteor.userId()
