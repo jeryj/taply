@@ -19,7 +19,7 @@ Template.addTap.events({
 Template.taps.helpers({
     'taps': function(tapListId){
         // return taps of the current tapListId
-        return Taps.find({tapList: tapListId}, {sort: {location: 1}});
+        return Taps.find({tapList: tapListId}, {sort: {createdAt: 1}});
     },
 
     'whatsOnTap': function(bevId) {
