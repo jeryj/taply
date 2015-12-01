@@ -1,12 +1,6 @@
 Template.tapLists.helpers({
     'tapList': function(){
-        return TapLists.find({archived: false}, {sort: {name: 1}});
-    },
-});
-
-Template.archivedTapLists.helpers({
-    'archivedTapList': function(){
-        return TapLists.find({archived: true}, {sort: {name: 1}});
+        return TapLists.find({}, {sort: {name: 1}});
     },
 });
 
@@ -27,35 +21,6 @@ Template.tapListLI.events({
         });
     },
 
-    'click .archive-taplist': function(e) {
-        e.preventDefault();
-        var tapListId = this._id;
-
-        Meteor.call("archiveTapList", tapListId, function(error, results) {
-            if(error) {
-                console.log(error.reason);
-            } else {
-                // success!
-                console.log('Archived '+tapListId);
-            }
-        });
-    },
-});
-
-Template.archivedTapLists.events({
-    'click .unarchive-taplist': function(e) {
-        e.preventDefault();
-        var tapListId = this._id;
-
-        Meteor.call("unarchiveTapList", tapListId, function(error, results) {
-            if(error) {
-                console.log(error.reason);
-            } else {
-                // success!
-                console.log('UnArchived '+tapListId);
-            }
-        });
-    },
 });
 
 Template.addTapList.events({

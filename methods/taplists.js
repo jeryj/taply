@@ -18,8 +18,7 @@ Meteor.methods({
                     name: tapListName,
                     createdAt: new Date(),
                     owner: Meteor.user().username,
-                    ownerId: Meteor.userId(),
-                    archived: false,
+                    ownerId: Meteor.userId()
                 };
 
         // using return statement so it'll pass back to the function that called this
@@ -40,21 +39,4 @@ Meteor.methods({
         TapLists.remove(tapListId);
 
     },
-
-    archiveTapList: function(tapListId) {
-        Meteor.call("isTapListOwner", Meteor.userId(), tapListId);
-
-        TapLists.update(tapListId, {
-            $set : {archived: true}
-        });
-    },
-
-    unarchiveTapList: function(tapListId) {
-        Meteor.call("isTapListOwner", Meteor.userId(), tapListId);
-
-        TapLists.update(tapListId, {
-            $set : {archived: false}
-        });
-    },
-
 });

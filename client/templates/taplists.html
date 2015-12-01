@@ -8,15 +8,12 @@
             {{>tapListLI}}
         {{/each}}
     </ul>
-
-    {{> archivedTapLists }}
 </template>
 
 <template name="tapListLI">
   <li><a href="/taplist/{{owner}}/{{name}}">{{name}}</a>
       {{#if isOwner ownerId}}
           <a href="#" class="delete-taplist">Delete</a>
-          <a href="#" class="archive-taplist">Archive</a>
       {{/if}}
   </li>
 </template>
@@ -27,21 +24,6 @@
     <h3>Your Bevs</h3>
     {{> bevs }}
 </template>
-
-<template name="archivedTapLists">
-    <h3>Archived TapLists</h3>
-    <ul class="no-list-style block-list">
-        {{#each archivedTapList}}
-            <li><a href="/taplist/{{owner}}/{{name}}">{{name}}</a>
-                {{#if isOwner ownerId}}
-                    <a href="#" class="delete-taplist">Delete</a>
-                    <a href="#" class="unarchive-taplist">UnArchive</a>
-                {{/if}}
-            </li>
-        {{/each}}
-    </ul>
-</template>
-
 
 <template name="addTapList">
     <form class="add-TapList">
