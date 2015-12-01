@@ -6,7 +6,7 @@ Meteor.methods({
         // check to make sure the value is a string
         check(tap.name, String);
 
-        if(tap.name == "") {
+        if(tap.name === "") {
             throw new Meteor.Error("no-tap-name", "Yo! Enter a name for your tap.");
         }
 
@@ -23,7 +23,7 @@ Meteor.methods({
         // check to make sure the value is a string
         check(parentID, String);
 
-        if(parentID == "") {
+        if(parentID === "") {
             throw new Meteor.Error("no-parent-ID", "Yo! Don't delete our vals. Not cool.");
         }
 
