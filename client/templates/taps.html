@@ -2,7 +2,7 @@
     <ul class="taps no-list-style block-list">
         {{#each taps _id}}
             <li>
-                {{location}}:
+                <span class="tap-number">{{tapCount @index}}</span>
                 {{#if onTap}}
                     {{#with whatsOnTap onTap}}
                         <strong>{{name}}</strong>
@@ -30,22 +30,12 @@
                 {{/if}}
             </li>
         {{/each}}
-        {{#if currentUser}}
-            <li><a href="{{name}}/add-tap">Add Tap</a></li>
+        {{#if isOwner ownerId}}
+            <li>{{> addTap }}</li>
         {{/if}}
     </ul>
 </template>
 
 <template name="addTap">
-    <h3>Add Tap: {{name}}</h3>
-    {{> addTapForm}}
-</template>
-
-<template name="addTapForm">
-    <form class="add-tap">
-        <label for="tap-location">Tap Position (From Left to Right)</label>
-        <input id="tap-location" type="number" name="tap-location" min="1" max="20"/>
-
-        <input type="submit" value="Add Tap">
-    </form>
+    <a class="add-tap" href="taps/add">Add Tap</a>
 </template>

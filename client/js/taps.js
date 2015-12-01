@@ -1,26 +1,15 @@
-Template.addTapForm.events({
-    'submit .add-tap': function(e) {
+Template.addTap.events({
+    'click .add-tap': function(e) {
         e.preventDefault();
         var tapListId = this._id;
 
-        var tapLocation = $('#tap-location').val();
-        tapLocation = parseInt(tapLocation, 10);
-
-        tap = {
-                    'location' : tapLocation,
-                };
-
-
         // insert a tap into the collection
-        Meteor.call("addNewTap", tap, tapListId, function(error, results) {
+        Meteor.call("addNewTap", tapListId, function(error, results) {
             if(error) {
                 console.log(error.reason);
             } else {
                 // success! Add the tap to the taplist
                 var newTap = results; // returns the id of the tap created
-                var tapList = TapLists.findOne({_id: newTap.tapList});
-                // go back to taplist
-                Router.go('/taplist/'+newTap.owner+'/'+tapList.name);
             }
         });
 
@@ -44,7 +33,12 @@ Template.taps.helpers({
       return false;
     },
 
+    'tapCount' : function(i) { // index starts with 0, we want it to start with 1
+        return i + 1;
+    }
 });
+
+
 
 Template.taps.events({
     'click .delete-tap': function(e) {
