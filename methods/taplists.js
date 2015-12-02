@@ -65,6 +65,8 @@ Meteor.methods({
         return TapLists.findOne({_id: newTapListId});
     },
 
+    // functionality for updating taplists (especially updating the number of taps logic)
+
 
     deleteTapList: function(tapListId) {
         // Make sure the user has permissions to be here

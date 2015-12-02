@@ -17,6 +17,9 @@
 
 <template name="tapListPage">
     <h2>TapList: {{name}}</h2>
+    {{#if isOwner ownerId}}
+        <a href="/taplist/{{owner}}/{{slug}}/update">Edit Taplist</a>
+    {{/if}}
     {{> taps }}
     <h3>Your Bevs</h3>
     {{> bevs }}
@@ -24,12 +27,25 @@
 
 <template name="addTapList">
     <form class="add-TapList">
-        <label for="name">Taplist Name</label>
-        <input id="name" type="text" name="name">
-
-        <label for="number-of-taps">How many taps does this taplist have?</label>
-        <input id="number-of-taps" type="number" min="1" max="1000" name="number-of-taps">
+        {{> tapListForm}}
         <br/>
-        <input type="submit" value="Create Taplist">
+        <input class="btn" type="submit" value="Create Taplist">
     </form>
+</template>
+
+<template name="editTapList">
+    <form class="edit-TapList">
+        {{> tapListForm}}
+        <br/>
+        <input class="btn" type="submit" value="Update Taplist">
+    </form>
+</template>
+
+
+<template name="tapListForm">
+    <label for="name">Taplist Name</label>
+    <input id="name" type="text" value="{{name}}" name="name">
+
+    <label for="number-of-taps">How many taps does this taplist have?</label>
+    <input id="number-of-taps" value="{{howManyTaps _id}}" type="number" min="1" max="1000" name="number-of-taps">
 </template>

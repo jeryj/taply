@@ -40,5 +40,29 @@ Template.addTapList.events({
             }
         });
     }
+});
 
+Template.editTapList.events({
+    'submit form': function(e) {
+        e.preventDefault();
+        var tapListName = $('[name=name]').val();
+        var numOfTaps = $('[name=number-of-taps]').val();
+
+        // Insert a taplist into the collection
+        Meteor.call("updateTapList", tapListName, numOfTaps, function(error, results) {
+            if(error) {
+                console.log(error.reason);
+            } else {
+                // send them to the page they created
+                var newTapList = results; // returns the id of the page created
+                Router.go('/taplist/'+Meteor.user().username+'/'+newTapList.slug);
+            }
+        });
+    }
+});
+
+Template.tapListForm.helpers({
+    'howManyTaps': function(tapListId){
+        return Taps.find({tapList: tapListId}).count();
+    },
 });

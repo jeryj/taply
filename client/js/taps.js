@@ -1,21 +1,3 @@
-Template.addTap.events({
-    'click .add-tap': function(e) {
-        e.preventDefault();
-        var tapListId = this._id;
-
-        // insert a tap into the collection
-        Meteor.call("addNewTap", tapListId, function(error, results) {
-            if(error) {
-                console.log(error.reason);
-            } else {
-                // success! Add the tap to the taplist
-                var newTap = results; // returns the id of the tap created
-            }
-        });
-
-    },
-});
-
 Template.taps.helpers({
     'taps': function(tapListId){
         // return taps of the current tapListId

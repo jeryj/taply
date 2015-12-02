@@ -20,22 +20,11 @@
                                 <option data-bevID="{{_id}}">{{name}}</option>
                             {{/each}}
                             </select>
-                            <input type="submit" value="Put On Tap">
+                            <input class="btn btn--small" type="submit" value="Put On Tap">
                         </form>
                     {{/if}}
                 {{/if}}
-                <br/>
-                {{#if isOwner ownerId}}
-                    <a href="#" class="delete-tap">Delete Tap</a>
-                {{/if}}
             </li>
         {{/each}}
-        {{#if isOwner ownerId}}
-            <li>{{> addTap }}</li>
-        {{/if}}
     </ul>
-</template>
-
-<template name="addTap">
-    <a class="add-tap" href="taps/add">Add Tap</a>
 </template>
