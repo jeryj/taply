@@ -11,7 +11,7 @@
 </template>
 
 <template name="tapListLI">
-  <li><a href="/taplist/{{owner}}/{{name}}">{{name}}</a>
+  <li><a href="/taplist/{{owner}}/{{slug}}">{{name}}</a>
       {{#if isOwner ownerId}}
           <a href="#" class="delete-taplist">Delete</a>
       {{/if}}

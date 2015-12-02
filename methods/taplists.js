@@ -33,7 +33,9 @@ Meteor.methods({
                 };
 
         // using return statement so it'll pass back to the function that called this
-        return TapLists.insert(data);
+        var newTapList = TapLists.insert(data);
+
+        return TapLists.findOne({_id: newTapList});
     },
 
 
