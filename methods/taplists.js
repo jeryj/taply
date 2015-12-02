@@ -51,14 +51,7 @@ Meteor.methods({
 
         var i = 0;
         while(i < numOfTaps) {
-            Meteor.call("addNewTap", newTapListId, function(error, results) {
-                if(error) {
-                    console.log(error.reason);
-                } else {
-                    // success! Add the tap to the taplist
-                    var newTap = results; // returns the id of the tap created
-                }
-            });
+            Meteor.call("addNewTap", newTapListId);
             i++;
         }
 
