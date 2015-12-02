@@ -21,7 +21,7 @@
             <li><a href="{{pathFor route='tapLists'}}">TapLists</a></li>
             {{#if currentUser}}
                 <li><a href="{{pathFor route='addBev'}}">Add Bev</a></li>
-                <li><a href="/user/{{currentUser.username}}">My Bevs</a></li>
+                <li><a href="/user/{{currentUser.username}}">My Taps/Bevs</a></li>
                 <li><a href="#" class="logout">Logout</a></li>
             {{else}}
                 <li><a href="{{pathFor route='register'}}">Register</a></li>

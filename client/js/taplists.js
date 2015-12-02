@@ -27,9 +27,10 @@ Template.addTapList.events({
     'submit form': function(e) {
         e.preventDefault();
         var tapListName = $('[name=name]').val();
+        var numOfTaps = $('[name=number-of-taps]').val();
 
         // Insert a taplist into the collection
-        Meteor.call("addNewTapList", tapListName, function(error, results) {
+        Meteor.call("addNewTapList", tapListName, numOfTaps, function(error, results) {
             if(error) {
                 console.log(error.reason);
             } else {
@@ -38,9 +39,6 @@ Template.addTapList.events({
                 Router.go('/taplist/'+Meteor.user().username+'/'+newTapList.slug);
             }
         });
-
-        // clear the name value
-        $('[name=name]').val('');
     }
 
 });

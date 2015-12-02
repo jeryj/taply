@@ -1,8 +1,5 @@
 <template name="tapLists">
-    <h2>TapLists</h2>
-    {{#if currentUser}}
-        {{> addTapList}}
-    {{/if}}
+    <h2>All User's TapLists</h2>
     <ul class="no-list-style block-list">
         {{#each tapList}}
             {{>tapListLI}}
@@ -27,9 +24,12 @@
 
 <template name="addTapList">
     <form class="add-TapList">
-        <label for="name">TapList Name</label>
+        <label for="name">Taplist Name</label>
         <input id="name" type="text" name="name">
 
-        <input type="submit" value="Create Tap List">
+        <label for="number-of-taps">How many taps does this taplist have?</label>
+        <input id="number-of-taps" type="number" min="1" max="1000" name="number-of-taps">
+        <br/>
+        <input type="submit" value="Create Taplist">
     </form>
 </template>

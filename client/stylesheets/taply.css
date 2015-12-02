@@ -5,9 +5,25 @@ body {
     margin: 0 auto;
 }
 
+.xm-bottom {
+    margin-bottom: 2em;
+}
+
 h1,h2,h3,h4,h5,h6 {
     font-family: 'Arial Black';
+    line-height: 1.2em;
+    margin: 0 0 0.2em;
 }
+
+p+h1,p+h2,p+h3,p+h4,p+h5,p+h6 {
+    margin-top: 3em;
+}
+
+p {
+    margin: 0 0 1.4em;
+    line-height: 1.6;
+}
+
 
 .no-list-style {
     padding: 0;
@@ -29,12 +45,14 @@ label {
     margin-top: 1.2em;
 }
 
+.btn,
 input[type="submit"] {
-    font-size: 1em;
-    padding: .5em .8em;
+    font-size: .95em;
+    padding: .75em 1em;
     color: #fff;
-    background: #c66a2f;
+    background: #22965B;
     border: none;
+    text-decoration: none;
     border-radius: 3px;
     cursor: hover;
 }
