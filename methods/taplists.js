@@ -111,11 +111,14 @@ Meteor.methods({
             // check to see if we need to add/remove taps
             if(numOfTaps < existingTaps) { // delete taps
                 // find the difference
+                var delete_these_taps = [];
                 var delete_this_many_taps = existingTaps - numOfTaps;
-                var tapsToDelete = Taps.find({}, {fields: {_id: 1}, sort: {createdAt: -1}, limit: delete_this_many_taps}).fetch();
-                // not working yet...
-                // Taps.remove({_id: {$in: tapsToDelete}});
-                //return false;
+                var tapsToDelete = Taps.find({}, {fields: {_id: 1}, sort: {createdAt: -1}, limit: delete_this_many_taps}).forEach(function(obj){
+                                delete_these_taps.push(obj._id);
+                            });
+
+                Taps.remove({_id: {$in: delete_these_taps}});
+
             } else { // add taps
 
                 var i = 0;
