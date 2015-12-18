@@ -47,9 +47,10 @@ Template.editTapList.events({
         e.preventDefault();
         var tapListName = $('[name=name]').val();
         var numOfTaps = $('[name=number-of-taps]').val();
+        var tapList = this; // this._id, this.owner, this.ownerId
 
         // Insert a taplist into the collection
-        Meteor.call("updateTapList", tapListName, numOfTaps, function(error, results) {
+        Meteor.call("updateTapList", tapList, tapListName, numOfTaps, function(error, results) {
             if(error) {
                 console.log(error.reason);
             } else {
