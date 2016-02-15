@@ -21,8 +21,10 @@
         <a href="/taplist/{{owner}}/{{slug}}/update">Edit Taplist</a>
     {{/if}}
     {{> taps }}
-    <h3>Your Bevs</h3>
-    {{> bevs }}
+    {{#if isOwner ownerId}}
+        <h3>Your Bevs</h3>
+        {{> bevs }}
+    {{/if}}
 </template>
 
 <template name="addTapList">
