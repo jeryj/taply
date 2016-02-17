@@ -120,3 +120,7 @@ input {
 .display__name {
     font-size: 2rem;
 }
+
+.display__name--empty {
+    color: #aaa;
+}
