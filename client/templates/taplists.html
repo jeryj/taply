@@ -17,6 +17,7 @@
 
 <template name="tapListPage">
     <h2>TapList: {{name}}</h2>
+    <a href="/taplist/{{owner}}/{{slug}}/display">Display Mode</a>
     {{#if isOwner ownerId}}
         <a href="/taplist/{{owner}}/{{slug}}/update">Edit Taplist</a>
     {{/if}}

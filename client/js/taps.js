@@ -1,27 +1,3 @@
-Template.taps.helpers({
-    'taps': function(tapListId){
-        // return taps of the current tapListId
-        return Taps.find({tapList: tapListId}, {sort: {createdAt: 1}});
-    },
-
-    'whatsOnTap': function(bevId) {
-
-      var whatsOnTap = Bevs.findOne({_id: bevId});
-      console.log(whatsOnTap);
-      if(whatsOnTap !== null) {
-          return whatsOnTap;
-      }
-
-      return false;
-    },
-
-    'tapCount' : function(i) { // index starts with 0, we want it to start with 1
-        return i + 1;
-    }
-});
-
-
-
 Template.taps.events({
     'click .delete-tap': function(e) {
         e.preventDefault();

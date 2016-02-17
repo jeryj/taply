@@ -1,0 +1,22 @@
+<template name="display">
+
+    <style>
+        .display__tap {
+            flex-basis: {{flexBasis _id}}%;
+        }
+    </style>
+    <ul class="display no-list-style">
+        {{#each taps _id}}
+            <li class="display__tap">
+                <span class="display__tap-number">{{tapCount @index}}</span>
+                {{#if onTap}}
+                    {{#with whatsOnTap onTap}}
+                        <h2 class="display__name">{{name}}</h2>
+                    {{/with}}
+                {{ else }}
+                    <h2 class="display__name display__name--empty">Empty?! Fill up that Keg, Dawg!</h2>
+                {{/if}}
+            </li>
+        {{/each}}
+    </ul>
+</template>

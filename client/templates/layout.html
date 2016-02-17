@@ -9,19 +9,20 @@
 
 
 <template name="main">
-    {{> navigation}}
-    {{> yield}}
+    <div class="container">
+        {{> navigation}}
+        {{> yield}}
+    </div>
 </template>
 
 <template name="navigation">
     <nav>
         <ul class="no-list-style inline-nav">
             <li><a href="{{pathFor route='home'}}">Home</a></li>
-            <li><a href="{{pathFor route='about'}}">About</a></li>
             <li><a href="{{pathFor route='tapLists'}}">TapLists</a></li>
             {{#if currentUser}}
                 <li><a href="{{pathFor route='addBev'}}">Add Bev</a></li>
-                <li><a href="/user/{{currentUser.username}}">My Taps/Bevs</a></li>
+                <li><a href="/user/{{currentUser.username}}">My TapLists &amp; Bevs</a></li>
                 <li><a href="#" class="logout">Logout</a></li>
             {{else}}
                 <li><a href="{{pathFor route='register'}}">Register</a></li>

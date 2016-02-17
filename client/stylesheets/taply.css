@@ -1,5 +1,9 @@
 body {
     font-family: Arial;
+    box-sizing: border-box;
+}
+
+.container {
     max-width: 48em;
     padding: 1em 2em;
     margin: 0 auto;
@@ -88,4 +92,31 @@ input {
     text-align: right;
     font-size: 1.2em;
     color: #888;
+}
+
+.display {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.display__tap {
+    flex: 1 1 25%;
+    padding: 1%;
+    border-right: 1px solid #ddd;
+    height: 95vh;
+    max-width: 100%;
+}
+
+.display__tap-number {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.display__tap:last-child {
+    border-right: none;
+}
+
+.display__name {
+    font-size: 2rem;
 }
