@@ -1,11 +1,15 @@
 <template name="display">
 
     <style>
-        .display__tap {
+        .display--landscape .display__tap {
             flex-basis: {{flexBasis _id}}%;
         }
+
+        .display--portrait .display__tap {
+            height: {{flexBasis _id}}vh;
+        }
     </style>
-    <ul class="display no-list-style">
+    <ul class="display display--portrait no-list-style">
         {{#each taps _id}}
             <li class="display__tap">
                 <span class="display__tap-number">{{tapCount @index}}</span>

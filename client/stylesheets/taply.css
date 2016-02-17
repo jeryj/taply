@@ -100,7 +100,23 @@ input {
     margin: 0;
 }
 
-.display__tap {
+.display--portrait {
+    flex-direction: column;
+    width: 100%;
+}
+
+.display--portrait .display__tap {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    padding-left: 2rem;
+}
+
+.display--portrait .display__tap:nth-child(even) {
+    background: #F9F9F9;
+}
+
+.display--landscape .display__tap {
     flex: 1 1 25%;
     padding: 1%;
     border-right: 1px solid #ddd;
@@ -108,17 +124,24 @@ input {
     max-width: 100%;
 }
 
+.display--landscape .display__tap:last-child {
+    border-right: none;
+}
+
 .display__tap-number {
     font-size: 1rem;
     font-weight: 500;
 }
 
-.display__tap:last-child {
-    border-right: none;
+.display--portrait .display__tap-number {
+    font-size: 2rem;
+    color: #999;
 }
 
 .display__name {
     font-size: 2rem;
+    margin-bottom: 0;
+    margin-left: 1rem;
 }
 
 .display__name--empty {
