@@ -11,15 +11,17 @@
     </style>
     <ul class="display display--portrait no-list-style">
         {{#each taps _id}}
-            <li class="display__tap">
-                <span class="display__tap-number">{{tapCount @index}}</span>
-                {{#if onTap}}
-                    {{#with whatsOnTap onTap}}
-                        <h2 class="display__name">{{name}}</h2>
-                    {{/with}}
-                {{ else }}
-                    <h2 class="display__name display__name--empty">Fuck you, nothing here!</h2>
-                {{/if}}
+            <li class="display__tap display__srm {{#if onTap}}{{#with whatsOnTap onTap}}display__srm--{{srm}}{{/with}}{{/if}}">
+                <div class="display__tap__container">
+                    {{#if onTap}}
+                        {{#with whatsOnTap onTap}}
+                            <h2 class="display__name">{{name}}{{#if abv}}<span class="display__abv">{{abv}}</span>{{/if}}</h2>
+                            <p class="display__type">{{type}}</p>
+                        {{/with}}
+                    {{ else }}
+                        <h2 class="display__name display__name--empty">Fuck you, nothing here!</h2>
+                    {{/if}}
+                </div>
             </li>
         {{/each}}
     </ul>

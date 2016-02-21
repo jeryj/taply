@@ -26,6 +26,8 @@ Meteor.methods({
 
     isBevOwner: function(userId, bevId) {
         Meteor.call("isLoggedIn", userId);
+        console.log(bevId);
+        console.log(userId);
 
         // check to make sure that the bevlist is owned by the current user
         theBev = Bevs.findOne({ _id: bevId, ownerId: userId });

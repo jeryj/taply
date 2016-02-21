@@ -62,8 +62,8 @@ Meteor.methods({
 
     // TAPLIST METHODS
     updateTapList: function(tapList, tapListName, numOfTaps) {
-        // Make sure the user is logged in before inserting a taplist
-        Meteor.call("isLoggedIn", Meteor.userId());
+        // Make sure the user has permissions to be here
+        Meteor.call("isTapListOwner", Meteor.userId(), tapList._id);
 
         // check to make sure the value is a string
         check(tapListName, String);

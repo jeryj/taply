@@ -1,3 +1,53 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* RESET END */
 body {
     font-family: Arial;
     box-sizing: border-box;
@@ -73,6 +123,7 @@ input {
     margin: .2em 0 .6em;
 }
 
+
 .tap {
     position: relative;
     padding: 1em 0 1em 2.6em;
@@ -80,7 +131,7 @@ input {
 }
 
 .tap:nth-child(even) {
-    background: #f8f8f8;
+    background: #FBF6EB;
 }
 
 .tap-number {
@@ -98,6 +149,20 @@ input {
     display: flex;
     justify-content: space-between;
     margin: 0;
+    counter-reset: tap-counter;
+}
+
+.display__tap {
+    counter-increment: tap-counter;
+}
+
+.display__tap:before {
+    content: counter(tap-counter);
+    font-weight: 500;
+    font-size: 2rem;
+    color: #999;
+    position: relative;
+    top: -0.4rem;
 }
 
 .display--portrait {
@@ -109,11 +174,25 @@ input {
     display: flex;
     align-items: center;
     align-content: center;
+    position: relative;
+    top: -0.4rem;
     padding-left: 2rem;
 }
 
+.display--portrait .display__tap__container {
+    position: relative;
+    top: -0.4rem;
+    margin-left: 1rem;
+}
+
+.display--portrait .display__type {
+    position: absolute;
+    margin: 0;
+    line-height: 1;
+}
+
 .display--portrait .display__tap:nth-child(even) {
-    background: #F9F9F9;
+    background: #FBF6EB;
 }
 
 .display--landscape .display__tap {
@@ -128,22 +207,148 @@ input {
     border-right: none;
 }
 
-.display__tap-number {
-    font-size: 1rem;
-    font-weight: 500;
-}
-
-.display--portrait .display__tap-number {
-    font-size: 2rem;
-    color: #999;
-}
-
 .display__name {
     font-size: 2rem;
     margin-bottom: 0;
-    margin-left: 1rem;
 }
 
 .display__name--empty {
     color: #aaa;
+}
+
+.display__abv {
+    position: relative;
+    margin-left: 1rem;
+}
+
+.display__abv:after {
+    content: '%';
+    font-size: 1rem;
+    position: absolute;
+    top: -0.1rem;
+}
+
+.display__srm {
+    border-left: 2vw solid #ff00b8;
+}
+
+.display__srm--1 {
+    border-color: #FDE69D;
+}
+.display__srm--2 {
+    border-color: #FCD87F;
+}
+.display__srm--3 {
+    border-color: #FCCA63;
+}
+.display__srm--4 {
+    border-color: #FBC050;
+}
+.display__srm--5 {
+    border-color: #F5B238;
+}
+.display__srm--6 {
+    border-color: #F3A728;
+}
+.display__srm--7 {
+    border-color: #EC9D26;
+}
+.display__srm--8 {
+    border-color: #E48F23;
+}
+.display__srm--9 {
+    border-color: #E18822;
+}
+.display__srm--10 {
+    border-color: #D87E1F;
+}
+.display__srm--11 {
+    border-color: #D1741D;
+}
+.display__srm--12 {
+    border-color: #C96C1B;
+}
+.display__srm--13 {
+    border-color: #C4641A;
+}
+.display__srm--14 {
+    border-color: #BD5C18;
+}
+.display__srm--15 {
+    border-color: #B45315;
+}
+.display__srm--16 {
+    border-color: #AE4F14;
+}
+.display__srm--17 {
+    border-color: #AA4713;
+}
+.display__srm--18 {
+    border-color: #A04011;
+}
+.display__srm--19 {
+    border-color: #9A390F;
+}
+.display__srm--20 {
+    border-color: #94350E;
+}
+.display__srm--21 {
+    border-color: #8F2F0D;
+}
+.display__srm--22 {
+    border-color: #8A2D0D;
+}
+.display__srm--23 {
+    border-color: #82260B;
+}
+.display__srm--24 {
+    border-color: #7D200A;
+}
+.display__srm--25 {
+    border-color: #761D09;
+}
+.display__srm--26 {
+    border-color: #711C07;
+}
+.display__srm--27 {
+    border-color: #6B1607;
+}
+.display__srm--28 {
+    border-color: #661006;
+}
+.display__srm--29 {
+    border-color: #611006;
+}
+.display__srm--30 {
+    border-color: #5A0E05;
+}
+.display__srm--31 {
+    border-color: #540D05;
+}
+.display__srm--32 {
+    border-color: #5C0B06;
+}
+.display__srm--33 {
+    border-color: #4E0B0B;
+}
+.display__srm--34 {
+    border-color: #490708;
+}
+.display__srm--35 {
+    border-color: #430808;
+}
+.display__srm--36 {
+    border-color: #410909;
+}
+.display__srm--37 {
+    border-color: #3B0A0A;
+}
+.display__srm--38 {
+    border-color: #380809;
+}
+.display__srm--39 {
+    border-color: #38080C;
+}
+.display__srm--40 {
+    border-color: #34090B;
 }
