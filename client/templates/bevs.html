@@ -36,6 +36,10 @@
 </template>
 
 <template name="addBev">
+    Styles!
+    {{#each arrayify styles}}
+        {{name}}
+    {{/each}}
     <form class="add-bev">
         {{> bev__form}}
         <br/>

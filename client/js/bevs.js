@@ -35,6 +35,26 @@ Template.addBev.events({
     },
 });
 
+Template.registerHelper('arrayify',function(obj){
+    result = [];
+    for (var key in obj) result.push({name:key,value:obj[key]});
+    console.log(obj);
+    return result;
+});
+
+Template.addBev.helpers({
+    'styles': function() {
+        Meteor.call("getBeerStyles", function(error, results) {
+            if(error) {
+                console.log('the error is '+error.reason);
+            } else {
+                //console.log(results);
+                return results;
+            }
+        });
+    }
+});
+
 Template.editBev.events({
     'submit .edit-bev': function(e) {
         e.preventDefault();

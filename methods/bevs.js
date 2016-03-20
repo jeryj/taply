@@ -127,5 +127,4 @@ Meteor.methods({
         Bevs.remove(bevId);
     },
 
-
 });

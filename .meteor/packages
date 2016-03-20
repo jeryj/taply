@@ -8,7 +8,6 @@ accounts-ui
 jquery
 accounts-password
 iron:router
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -21,3 +20,6 @@ random
 ejson
 spacebars
 check
+http
+fourseven:scss
+seba:minifiers-autoprefixer
