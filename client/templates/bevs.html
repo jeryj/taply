@@ -8,13 +8,13 @@
 
 <template name="bevLI">
   <li>
-      <strong>{{name}}</strong><br/>
+      <h5>{{name}}</h5>
       {{#if type}}
-          Type: {{type}}<br/>
+         <p class="no-margin-bottom">{{type}}</p>
       {{/if}}
       {{#if isOwner ownerId}}
           <a href="/bev/{{_id}}/update" class="edit-bev">Edit</a>
-          <a href="#" class="delete-bev">Delete</a>
+          <a href="#" class="delete delete-bev">Delete</a>
       {{/if}}
   </li>
 </template>

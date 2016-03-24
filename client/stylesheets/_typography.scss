@@ -1,0 +1,75 @@
+body {
+    font-family: "jaf-bernina-sans", arial, helvetica, sans-serif;
+}
+
+a {
+    color: $green;
+    text-decoration: none;
+
+    &:hover {
+        color: darken($green, 12.5);
+    }
+}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family:  "jaf-bernina-sans", 'Arial Black', arial, helvetica, sans-serif;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 0.2rem;
+}
+
+h1 {
+    font-size: 2.6rem;
+}
+
+h2 {
+    font-size: 2.2rem;
+}
+
+h3 {
+    font-size: 1.6rem;
+}
+
+h4 {
+    font-size: 1.4rem;
+}
+
+h5 {
+    font-size: 1.2rem;
+}
+
+h6 {
+    font-size: 1rem;
+}
+
+p+h1,p+h2,p+h3,p+h4,p+h5,p+h6 {
+    margin-top: 3rem;
+}
+
+p {
+    margin-bottom: 1.4rem;
+    line-height: 1.6;
+}
+
+.btn {
+    font-size: .95rem;
+    padding: .75em 1rem;
+    color: #fff;
+    background: $green;
+    border: none;
+    text-decoration: none;
+    border-radius: 3px;
+    cursor: hover;
+	-webkit-appearance:none;
+
+    &:hover,
+    &:focus {
+        background: darken($green, 12.5);
+        color: #fff;
+    }
+}
+
+.btn--small {
+    font-size: .9rem;
+    padding: .3rem .6rem
+}

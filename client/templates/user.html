@@ -1,22 +1,30 @@
 <template name="user">
-    <h2>Your TapLists</h2>
-    {{#if userHasTaps username}}
-        <ul class="taplists-list taplists--user no-list-style block-list">
-            {{#each userTapLists username}}
-              {{> tapListLI}}
+    <section class="user-taplists">
+        <header class="section-header flex-header">
+            <h2>Your TapLists</h2>
+            <a class="btn" href="/taplist/add">Create a Taplist</a>
+        </header>
+        {{#if userHasTaps username}}
+            <ul class="taplists-list taplists--user no-list-style block-list">
+                {{#each userTapLists username}}
+                  {{> tapListLI}}
+                {{/each}}
+            </ul>
+        {{else}}
+            <p>A Taplist is your kegerator or bar. It's where your taps live.</p>
+        {{/if}}
+    </section>
+
+    <section class="user-bevs">
+        <header class="section-header flex-header">
+            <h2 class="xm-bottom">Your Bevs</h2>
+            <p><a class="btn" href="{{pathFor route='addBev'}}">Add Bev</a></p>
+        </header>
+        <ul class="bevs-list bevs-list--user no-list-style block-list">
+            {{#each userBevs username}}
+                {{> bevLI}}
             {{/each}}
         </ul>
-    {{else}}
-        <p>A Taplist is your kegerator or bar. It's where your taps live.</p>
-    {{/if}}
-    <p><a class="btn" href="/taplist/add">Create a Taplist</a></p>
-
-    <h2 class="xm-bottom">Your Bevs</h2>
-    <p><a class="btn" href="{{pathFor route='addBev'}}">Add Bev</a></p>
-    <ul class="bevs-list bevs-list--user no-list-style block-list">
-        {{#each userBevs username}}
-            {{> bevLI}}
-        {{/each}}
-    </ul>
+    </section>
 
 </template>

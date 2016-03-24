@@ -1,0 +1,39 @@
+%xm-bottom {
+    margin-bottom: 2em;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0;
+}
+
+.no-list-style {
+    padding: 0;
+    list-style: none;
+}
+
+.inline-nav li {
+    display: inline-block;
+    list-style: none;
+    margin-right: 0.8em;
+}
+
+.block-list {
+    margin-bottom: 1.6rem;
+
+    li {
+        padding: 1rem;
+
+        &:nth-child(even){
+            background: #FBF6EB;
+        }
+    }
+}
+
+.delete {
+    float: right;
+    color: $red;
+
+    &:hover {
+        color: darken($red, 12.5);
+    }
+}

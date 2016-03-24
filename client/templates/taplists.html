@@ -1,5 +1,5 @@
 <template name="tapLists">
-    <h2>All User's TapLists</h2>
+    <h2>All User’s TapLists</h2>
     <ul class="no-list-style block-list">
         {{#each tapList}}
             {{>tapListLI}}
@@ -10,7 +10,7 @@
 <template name="tapListLI">
   <li><a href="/taplist/{{owner}}/{{slug}}">{{name}}</a>
       {{#if isOwner ownerId}}
-          <a href="#" class="delete-taplist">Delete</a>
+          <a href="#" class="delete delete-taplist">Delete</a>
       {{/if}}
   </li>
 </template>

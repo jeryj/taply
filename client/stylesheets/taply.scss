@@ -1,0 +1,32 @@
+@import "reset";
+@import "colors";
+@import "utilities";
+@import "layout";
+@import "typography";
+@import "forms";
+@import "header";
+@import "footer";
+
+
+
+
+.tap {
+    position: relative;
+    padding: 1em 0 1em 2.6em;
+    left: -2.6em;
+}
+
+.tap:nth-child(even) {
+    background: #FBF6EB;
+}
+
+.tap-number {
+    position: absolute;
+    width: 1.6em;
+    padding-right: 0.2em;
+    left: 0;
+    top: 0.8em;
+    text-align: right;
+    font-size: 1.2em;
+    color: #888;
+}

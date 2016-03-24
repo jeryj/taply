@@ -1,5 +1,7 @@
 <head>
-  <title>taply</title>
+  <title>Taply</title>
+  <script src="https://use.typekit.net/opq0qzs.js"></script>
+  <script>try{Typekit.load({ async: true });}catch(e){}</script>
 </head>
 
 <body>
@@ -9,8 +11,11 @@
 
 
 <template name="main">
-    <div class="container">
+    <header class="header container">
+        <h2 class="site-title"><a href="{{pathFor route='home'}}">Taply</a></h2>
         {{> navigation}}
+    </header>
+    <div class="container">
         {{> yield}}
     </div>
 </template>
@@ -18,7 +23,6 @@
 <template name="navigation">
     <nav>
         <ul class="no-list-style inline-nav">
-            <li><a href="{{pathFor route='home'}}">Home</a></li>
             <li><a href="{{pathFor route='tapLists'}}">TapLists</a></li>
             {{#if currentUser}}
                 <li><a href="{{pathFor route='addBev'}}">Add Bev</a></li>
