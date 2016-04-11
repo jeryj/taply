@@ -1,5 +1,5 @@
 <template name="taps">
-    <ul class="taps no-list-style">
+    <ul class="taps no-list-style block-list">
         {{#each taps _id}}
             <li class="tap">
                 <span class="tap-number">{{tapCount @index}}</span>
@@ -8,7 +8,9 @@
                         <strong>{{name}}</strong>
                     {{/with}}
                     {{#if isOwner ownerId}}
-                        <a class="remove-bev-from-tap" href="#">Remove Bev</a>
+                        <a class="remove-bev-from-tap" href="#"><svg class="icon icon--delete">
+                        <use xlink:href="#icon-close" />
+                    </svg></a>
                     {{/if}}
 
                 {{ else }}

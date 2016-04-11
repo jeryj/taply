@@ -14,7 +14,9 @@
       {{/if}}
       {{#if isOwner ownerId}}
           <a href="/bev/{{_id}}/update" class="edit-bev">Edit</a>
-          <a href="#" class="delete delete-bev">Delete</a>
+          <a href="#" class="delete delete-bev"><svg class="icon icon--delete">
+          <use xlink:href="#icon-close" />
+      </svg></a>
       {{/if}}
   </li>
 </template>
@@ -27,7 +29,9 @@
                 {{name}}
                 {{#if isOwner ownerId}}
                     <br/>
-                    <a href="#" class="delete-bev">Delete</a>
+                    <a href="#" class="delete-bev"><svg class="icon icon--delete">
+                    <use xlink:href="#icon-close" />
+                </svg></a>
                     <a href="#" class="unarchive-bev">UnArchive</a>
                 {{/if}}
             </li>
@@ -36,10 +40,7 @@
 </template>
 
 <template name="addBev">
-    Styles!
-    {{#each arrayify styles}}
-        {{name}}
-    {{/each}}
+
     <form class="add-bev">
         {{> bev__form}}
         <br/>
@@ -84,13 +85,13 @@
     <label for="born-on">Born on</label>
     <input id="born-on" type="date" name="born-on" value="{{bornOn}}"/>
 
-    <label for="bjcp-category">BJCP Category</label>
+    <!--<label for="bjcp-category">BJCP Category</label>
     <select id="bjcp-category" name="bjcp-category">
         <option value="standard american beer">1. Standard American Beer</option>
         <option value="international lager">2. International Lager</option>
-    </select>
+    </select>-->
 
-    <label for="bjcp-subcategory">BJCP Subcategory</label>
+    <!--<label for="bjcp-subcategory">BJCP Subcategory</label>
     <select id="bjcp-subcategory" name="bjcp-subcategory">
         <option value="american light lager">1A. American Light Lager</option>
         <option value="american lager">1B. American Lager</option>
@@ -99,9 +100,18 @@
         <option value="international pale lager">2A. International Pale Lager</option>
         <option value="international amber lager">2B. International Amber Lager</option>
         <option value="international dark lager">2C. International Dark Lager</option>
-    </select>
+    </select>-->
 
-    <label for="glass-shape">Glass Shape</label>
+    <!--<label for="hoppiness">Hoppiness</label>
+    <select id="hoppiness" name="hoppiness">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>-->
+
+    <!--<label for="glass-shape">Glass Shape</label>
     <select id="glass-shape" name="glass-shape">
         <option value="shaker pint">Shaker Pint</option>
         <option value="nonic pint">Nonic Pint</option>
@@ -110,21 +120,12 @@
         <option value="goblet">Goblet</option>
         <option value="pilsner flute">Pilsner Flute</option>
         <option value="mason jar">Mason Jar</option>
-    </select>
+    </select>-->
 
-    <label for="hoppiness">Hoppiness</label>
-    <select id="hoppiness" name="hoppiness">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-    </select>
-
-    <label for="quantity">Stock / Quantity</label>
+    <!--<label for="quantity">Stock / Quantity</label>
     <select id="quantity" name="quantity">
         <option value="high">High</option>
         <option value="medium">Medium</option>
         <option value="low">Low</option>
-    </select>
+    </select>-->
 </template>

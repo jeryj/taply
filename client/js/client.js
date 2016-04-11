@@ -14,6 +14,8 @@ Template.registerHelper('ownerBevs', function(ownerId){
 
 Template.registerHelper('taps', function(tapListId){
     // return taps of the current tapListId
+    var tappy = Taps.find({tapList: tapListId}, {sort: {createdAt: 1}});
+    console.log(tappy);
     return Taps.find({tapList: tapListId}, {sort: {createdAt: 1}});
 });
 

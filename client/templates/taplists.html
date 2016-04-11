@@ -1,5 +1,5 @@
 <template name="tapLists">
-    <h2>All User’s TapLists</h2>
+    <h2 class="title--small">All User’s TapLists</h2>
     <ul class="no-list-style block-list">
         {{#each tapList}}
             {{>tapListLI}}
@@ -10,20 +10,22 @@
 <template name="tapListLI">
   <li><a href="/taplist/{{owner}}/{{slug}}">{{name}}</a>
       {{#if isOwner ownerId}}
-          <a href="#" class="delete delete-taplist">Delete</a>
+          <a href="#" class="delete delete-taplist"><svg class="icon icon--delete">
+          <use xlink:href="#icon-close" />
+      </svg></a>
       {{/if}}
   </li>
 </template>
 
 <template name="tapListPage">
-    <h2>TapList: {{name}}</h2>
+    <h2><span class="title--small">TapList</span><br/>{{name}}</h2>
     <a href="/taplist/{{owner}}/{{slug}}/display">Display Mode</a>
     {{#if isOwner ownerId}}
         <a href="/taplist/{{owner}}/{{slug}}/update">Edit Taplist</a>
     {{/if}}
     {{> taps }}
     {{#if isOwner ownerId}}
-        <h3>Your Bevs</h3>
+        <h3 class="title--small">Your Bevs</h3>
         {{> bevs }}
     {{/if}}
 </template>

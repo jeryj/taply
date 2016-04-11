@@ -4,11 +4,13 @@ Template.addBev.events({
 
         var bevName = $('#beverage-name').val();
         var bevType = $('#beverage-type').val();
-        var bevABV = parseFloat($('#beverage-abv').val()).toFixed(1);
-        var bevSRM = parseInt($('#beverage-srm').val());
-        var bevIBU = parseInt($('#ibu').val());
-        var bevOG = parseFloat($('#og').val()).toFixed(3);
-        var bevFG = parseFloat($('#fg').val()).toFixed(3);
+        var bevABV = $('#beverage-abv').val();
+        var bevSRM = $('#beverage-srm').val();
+        var bevIBU = $('#ibu').val();
+        var bevOG = $('#og').val();
+        var bevFG = $('#fg').val();
+        var brewDate = $('#brew-date').val();
+        var bornOn = $('#born-on').val();
 
         bev = {
                     'name' : bevName,
@@ -18,6 +20,8 @@ Template.addBev.events({
                     'ibu' : bevIBU,
                     'og' : bevOG,
                     'fg' : bevFG,
+                    'brewDate' : brewDate,
+                    'bornOn' : bornOn,
                 };
 
 
@@ -31,19 +35,12 @@ Template.addBev.events({
                 Router.go('/user/'+newBev.owner);
             }
         });
-
     },
-});
-
-Template.registerHelper('arrayify',function(obj){
-    result = [];
-    for (var key in obj) result.push({name:key,value:obj[key]});
-    console.log(obj);
-    return result;
 });
 
 Template.addBev.helpers({
     'styles': function() {
+
         Meteor.call("getBeerStyles", function(error, results) {
             if(error) {
                 console.log('the error is '+error.reason);
@@ -52,7 +49,7 @@ Template.addBev.helpers({
                 return results;
             }
         });
-    }
+    },
 });
 
 Template.editBev.events({
@@ -61,11 +58,13 @@ Template.editBev.events({
 
         var bevName = $('#beverage-name').val();
         var bevType = $('#beverage-type').val();
-        var bevABV = parseFloat($('#beverage-abv').val()).toFixed(1);
-        var bevSRM = parseInt($('#beverage-srm').val());
-        var bevIBU = parseInt($('#ibu').val());
-        var bevOG = parseFloat($('#og').val()).toFixed(3);
-        var bevFG = parseFloat($('#fg').val()).toFixed(3);
+        var bevABV = $('#beverage-abv').val();
+        var bevSRM = $('#beverage-srm').val();
+        var bevIBU = $('#ibu').val();
+        var bevOG = $('#og').val();
+        var bevFG = $('#fg').val();
+        var brewDate = $('#brew-date').val();
+        var bornOn = $('#born-on').val();
 
         bev = {
                     '_id':  this._id, // this._id, this.owner, this.ownerId
@@ -76,6 +75,8 @@ Template.editBev.events({
                     'ibu' : bevIBU,
                     'og' : bevOG,
                     'fg' : bevFG,
+                    'brewDate' : brewDate,
+                    'bornOn' : bornOn,
                 };
 
 

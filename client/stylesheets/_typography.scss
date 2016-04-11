@@ -16,6 +16,7 @@ h1,h2,h3,h4,h5,h6 {
     font-weight: bold;
     line-height: 1.2;
     margin-bottom: 0.2rem;
+    color: #555;
 }
 
 h1 {
@@ -72,4 +73,9 @@ p {
 .btn--small {
     font-size: .9rem;
     padding: .3rem .6rem
+}
+
+.title--small {
+    font-size: 1rem;
+    text-transform: uppercase;
 }

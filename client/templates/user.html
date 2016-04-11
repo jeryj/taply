@@ -1,7 +1,7 @@
 <template name="user">
     <section class="user-taplists">
         <header class="section-header flex-header">
-            <h2>Your TapLists</h2>
+            <h2 class="title--small">Your TapLists</h2>
             <a class="btn" href="/taplist/add">Create a Taplist</a>
         </header>
         {{#if userHasTaps username}}
@@ -16,8 +16,8 @@
     </section>
 
     <section class="user-bevs">
-        <header class="section-header flex-header">
-            <h2 class="xm-bottom">Your Bevs</h2>
+        <header class="section-header flex-header xm-top">
+            <h2 class="xm-bottom title--small">Your Bevs</h2>
             <p><a class="btn" href="{{pathFor route='addBev'}}">Add Bev</a></p>
         </header>
         <ul class="bevs-list bevs-list--user no-list-style block-list">
