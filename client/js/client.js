@@ -38,3 +38,17 @@ Template.registerHelper('howManyTaps', function(tapListId){
     console.log(Taps.find({tapList: tapListId}).count());
     return Taps.find({tapList: tapListId}).count();
 });
+
+Template.registerHelper('beerJSON', function(){
+
+});
+
+HTTP.get(Meteor.absoluteUrl("beer.json"), {}, function(error,response) {
+    if(error) {
+        console.log( error );
+     } else {
+       // set a session so we can access the data
+       Session.set('beerJSON', response.data);
+      // console.log(response.data);
+    }
+});
