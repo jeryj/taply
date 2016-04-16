@@ -18,10 +18,9 @@
 </template>
 
 <template name="tapListPage">
-    <h2><span class="title--small">TapList</span><br/>{{name}}</h2>
-    <a href="/taplist/{{owner}}/{{slug}}/display">Display Mode</a>
+    <h2 class="taplist__title"><span class="title--small">TapList</span><br/><a class="taplist__display-link" href="/taplist/{{owner}}/{{slug}}/display">{{name}}</a></h2>
     {{#if isOwner ownerId}}
-        <a href="/taplist/{{owner}}/{{slug}}/update">Edit Taplist</a>
+        <a class="taplist__edit-link" href="/taplist/{{owner}}/{{slug}}/update">Edit</a>
     {{/if}}
     {{> taps }}
     {{#if isOwner ownerId}}
