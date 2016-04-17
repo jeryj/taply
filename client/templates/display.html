@@ -1,5 +1,5 @@
 <template name="display">
-
+    {{> svg}}
     <ul class="display display--portrait no-list-style">
         {{#each taps _id}}
             <li class="display__tap display__srm {{#if onTap}}{{#with whatsOnTap onTap}}display__srm--{{srm}}{{/with}}{{/if}}">
@@ -23,6 +23,9 @@
                 {{#with whatsOnTap onTap}}
                     <li id="bev--{{_id}}" class="bev-details__bev">
                         <div class="bev-details__container">
+                        <a href="#" class="bev-details__close"><svg class="icon icon--close">
+                            <use xlink:href="#icon-close" />
+                        </svg></a>
                         <h3 class="bev-details__name">{{name}}</h3>
                         <div class="bev-details__info">
                             <ul>
