@@ -113,7 +113,9 @@
     z-index: 999;
     height: 100vh;
     overflow-y: scroll;
+    width: 320px;
     padding: 2em 10px;
+    
     @media (min-width: 460px) {
         width: 400px;
         padding: 2em 30px;
