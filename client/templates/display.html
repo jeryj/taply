@@ -28,7 +28,7 @@
                             <ul>
                                 {{#if type}}<li>{{type}}</li>{{/if}}
                                 {{#if bjcpSubcategory}}{{#with getBJCPSubcategory bjcpSubcategory}}<li>{{name}}</li>{{/with}}{{/if}}
-                                {{#if abv}}<li>{{abv}}</li>{{/if}}
+                                {{#if abv}}<li>{{abv}}%</li>{{/if}}
                                 {{#if ibu}}<li>{{ibu}} IBUs</li>{{/if}}
                                 {{#if og}}<li>OG: {{og}}</li>{{/if}}
                                 {{#if fg}}<li>FG: {{fg}}</li>{{/if}}
@@ -38,7 +38,8 @@
                     </div>
                 </li>
                 {{/with}}
-
+            {{else}}
+                <li class="bev-details__bev">Nothing on tap here</li>
             {{/if}}
         {{/each}}
     </ul>

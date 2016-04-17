@@ -50,3 +50,20 @@ table {
 }
 
 /* RESET END */
+
+/* Reseting to border-box so we can do 100% width with 20px and not mess stuff up. */
+html {
+box-sizing: border-box;
+}
+
+*, *:before, *:after {
+box-sizing: inherit;
+}
+
+html {
+    font-size: 16px!important; // set our rem value reference
+}
+
+body {
+	overflow: hidden;
+}
