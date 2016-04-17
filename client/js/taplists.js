@@ -2,10 +2,6 @@ Template.tapLists.helpers({
     'tapList': function(){
         return TapLists.find({}, {sort: {name: 1}});
     },
-    'BJCPjson': function() {
-        // THIS is how you access Beer JSON on client
-        return Session.get('beerJSON')[0].name;
-    }
 });
 
 Template.tapListLI.events({

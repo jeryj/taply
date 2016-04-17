@@ -40,7 +40,8 @@ Template.registerHelper('howManyTaps', function(tapListId){
 });
 
 Template.registerHelper('beerJSON', function(){
-
+    // THIS is how you access Beer JSON on client
+    return Session.get('beerJSON');
 });
 
 HTTP.get(Meteor.absoluteUrl("beer.json"), {}, function(error,response) {
@@ -51,4 +52,15 @@ HTTP.get(Meteor.absoluteUrl("beer.json"), {}, function(error,response) {
        Session.set('beerJSON', response.data);
       // console.log(response.data);
     }
+});
+
+UI.registerHelper('selectedIf', function(selected, val) {
+    console.log(selected);
+    console.log(val);
+  if(val === selected) {
+      console.log(val+' matches '+selected);
+      return 'selected';
+  } else {
+      return '';
+  }
 });

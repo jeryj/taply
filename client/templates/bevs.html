@@ -64,6 +64,24 @@
     <label for="beverage-type">Beverage Type</label>
     <input id="beverage-type" type="text" name="beverage-type"  value="{{type}}"/>
 
+    <label for="bjcp-category">BJCP Category</label>
+    <select id="bjcp-category" name="bjcp-category">
+        {{#each beer in beerJSON}}
+            <option value="{{beer.id}}" {{selectedIf beer.id bjcpCategory}}>{{beer.id}}. {{beer.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for="bjcp-category">BJCP Subcategory</label>
+    <select id="bjcp-subcategory" name="bjcp-subcategory">
+        {{#each beer in beerJSON}}
+            {{#if beer.subcategory}}
+                {{#each subBeer in beer.subcategory}}
+                    <option value="{{subBeer.id}}" {{selectedIf subBeer.id bjcpSubcategory}}>{{subBeer.id}}. {{subBeer.name}}</option>
+                {{/each}}
+            {{/if}}
+        {{/each}}
+    </select>
+
     <label for="beverage-abv">ABV</label>
     <input id="beverage-abv" type="number" name="abv" step="0.1" value="{{abv}}"/>%
 

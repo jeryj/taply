@@ -1,30 +1,8 @@
 Template.addBev.events({
     'submit .add-bev': function(e) {
         e.preventDefault();
-
-        var bevName = $('#beverage-name').val();
-        var bevType = $('#beverage-type').val();
-        var bevABV = $('#beverage-abv').val();
-        var bevSRM = $('#beverage-srm').val();
-        var bevIBU = $('#ibu').val();
-        var bevOG = $('#og').val();
-        var bevFG = $('#fg').val();
-        var brewDate = $('#brew-date').val();
-        var bornOn = $('#born-on').val();
-
-        bev = {
-                    'name' : bevName,
-                    'type' : bevType,
-                    'abv' : bevABV,
-                    'srm' : bevSRM,
-                    'ibu' : bevIBU,
-                    'og' : bevOG,
-                    'fg' : bevFG,
-                    'brewDate' : brewDate,
-                    'bornOn' : bornOn,
-                };
-
-
+        // build the object to pass to save
+        bev = buildBevObj();
         // insert a bev into the collection
         Meteor.call("addNewBev", bev, function(error, results) {
             if(error) {
@@ -38,47 +16,13 @@ Template.addBev.events({
     },
 });
 
-Template.addBev.helpers({
-    'styles': function() {
-
-        Meteor.call("getBeerStyles", function(error, results) {
-            if(error) {
-                console.log('the error is '+error.reason);
-            } else {
-                //console.log(results);
-                return results;
-            }
-        });
-    },
-});
-
 Template.editBev.events({
     'submit .edit-bev': function(e) {
         e.preventDefault();
 
-        var bevName = $('#beverage-name').val();
-        var bevType = $('#beverage-type').val();
-        var bevABV = $('#beverage-abv').val();
-        var bevSRM = $('#beverage-srm').val();
-        var bevIBU = $('#ibu').val();
-        var bevOG = $('#og').val();
-        var bevFG = $('#fg').val();
-        var brewDate = $('#brew-date').val();
-        var bornOn = $('#born-on').val();
-
-        bev = {
-                    '_id':  this._id, // this._id, this.owner, this.ownerId
-                    'name' : bevName,
-                    'type' : bevType,
-                    'abv' : bevABV,
-                    'srm' : bevSRM,
-                    'ibu' : bevIBU,
-                    'og' : bevOG,
-                    'fg' : bevFG,
-                    'brewDate' : brewDate,
-                    'bornOn' : bornOn,
-                };
-
+        bev = buildBevObj();
+        // add in the _id
+        bev._id = this._id; // this._id, this.owner, this.ownerId
 
         // edit a bev
         Meteor.call("updateBev", bev, function(error, results) {
@@ -117,3 +61,36 @@ Template.bevs.helpers({
         return Bevs.find({owner: Meteor.user().username}, {sort: {name: 1}});
     }
 });
+
+/**
+* build the bev object to pass to the save method
+*/
+function buildBevObj() {
+    var bevName = $('#beverage-name').val();
+    var bevType = $('#beverage-type').val();
+    var bevABV = $('#beverage-abv').val();
+    var bevSRM = $('#beverage-srm').val();
+    var BJCPcat = $('#bjcp-category').val();
+    var BJCPsubcat = $('#bjcp-subcategory').val();
+    var bevIBU = $('#ibu').val();
+    var bevOG = $('#og').val();
+    var bevFG = $('#fg').val();
+    var brewDate = $('#brew-date').val();
+    var bornOn = $('#born-on').val();
+
+    bev = {
+                'name' : bevName,
+                'type' : bevType,
+                'bjcpCategory': BJCPcat,
+                'bjcpSubcategory': BJCPsubcat,
+                'abv' : bevABV,
+                'srm' : bevSRM,
+                'ibu' : bevIBU,
+                'og' : bevOG,
+                'fg' : bevFG,
+                'brewDate' : brewDate,
+                'bornOn' : bornOn,
+            };
+
+    return bev;
+}
