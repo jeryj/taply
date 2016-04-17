@@ -16,7 +16,7 @@
                     {{#if onTap}}
                         {{#with whatsOnTap onTap}}
                             <h2 class="display__name">{{name}}{{#if abv}}<span class="display__abv">{{abv}}</span>{{/if}}</h2>
-                            <p class="display__type">{{type}}</p>
+                            <ul class="display__data">{{#if type}}<li class="display__data__type">{{type}}</li>{{/if}}{{#with getBJCPSubcategory bjcpSubcategory}}<li class="display__data__subcategory">{{name}}</li>{{/with}}</ul>
                         {{/with}}
                     {{ else }}
                         <h2 class="display__name display__name--empty">Fuck you, nothing here!</h2>

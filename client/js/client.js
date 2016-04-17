@@ -44,6 +44,19 @@ Template.registerHelper('beerJSON', function(){
     return Session.get('beerJSON');
 });
 
+Template.registerHelper('getBJCPSubcategory', function(subcategoryID){
+    beerJSON = Session.get('beerJSON');
+    for (i = 0; i < beerJSON.length; i++) {
+        for(j = 0; j < beerJSON[i].subcategory.length; j++) {
+            if(beerJSON[i].subcategory[j].id === subcategoryID) {
+                console.log(beerJSON[i].subcategory[j]);
+                return beerJSON[i].subcategory[j];
+            }
+        }
+    }
+    return false;
+});
+
 HTTP.get(Meteor.absoluteUrl("beer.json"), {}, function(error,response) {
     if(error) {
         console.log( error );
@@ -55,10 +68,7 @@ HTTP.get(Meteor.absoluteUrl("beer.json"), {}, function(error,response) {
 });
 
 UI.registerHelper('selectedIf', function(selected, val) {
-    console.log(selected);
-    console.log(val);
   if(val === selected) {
-      console.log(val+' matches '+selected);
       return 'selected';
   } else {
       return '';

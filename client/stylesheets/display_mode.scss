@@ -78,8 +78,30 @@
     content: '%';
     font-size: 1rem;
     position: absolute;
-    top: -0.1rem;
+    top: 0.4rem;
 }
+
+.display__data {
+    list-style: none;
+    margin: 0;
+}
+
+.display__data li {
+    display: inline-block;
+    margin-right: .6em;
+
+    &:before {
+        margin-right: .6em;
+        content: '/';
+        color: #bbb;
+    }
+
+    &:first-child:before {
+        content: '';
+        margin-right: 0;
+    }
+}
+
 
 .display__srm {
     border-left: 2vw solid #ff00b8;
