@@ -16,6 +16,7 @@ Meteor.methods({
                     ibu: bev.ibu,
                     og: bev.og,
                     fg: bev.fg,
+                    notes: bev.notes,
                     brewDate: bev.brewDate,
                     bornOn: bev.bornOn,
                     onTap: false,
@@ -48,6 +49,7 @@ Meteor.methods({
                                     ibu: bev.ibu,
                                     og: bev.og,
                                     fg: bev.fg,
+                                    notes: bev.notes,
                                     brewDate: bev.brewDate,
                                     bornOn: bev.bornOn,
                                     }

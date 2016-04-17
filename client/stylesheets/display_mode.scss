@@ -102,6 +102,24 @@
     }
 }
 
+.bev-details {
+    position: absolute;
+    top: 0;
+    width: 60vw;
+}
+
+.bev-details__bev {
+    position: absolute;
+    height: 100vh;
+    width: 60vw;
+    padding: 5vh 5vw;
+    right: -110vw;
+    background: #fff;
+}
+
+.bev-details__bev--active {
+    right: -60vw;
+}
 
 .display__srm {
     border-left: 2vw solid #ff00b8;

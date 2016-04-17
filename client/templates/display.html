@@ -1,21 +1,12 @@
 <template name="display">
 
-    <style>
-        .display--landscape .display__tap {
-            flex-basis: {{flexBasis _id}}%;
-        }
-
-        .display--portrait .display__tap {
-            height: {{flexBasis _id}}vh;
-        }
-    </style>
     <ul class="display display--portrait no-list-style">
         {{#each taps _id}}
             <li class="display__tap display__srm {{#if onTap}}{{#with whatsOnTap onTap}}display__srm--{{srm}}{{/with}}{{/if}}">
                 <div class="display__tap__container">
                     {{#if onTap}}
                         {{#with whatsOnTap onTap}}
-                            <h2 class="display__name">{{name}}{{#if abv}}<span class="display__abv">{{abv}}</span>{{/if}}</h2>
+                            <h2 class="display__name"><a class="{{_id}}" href="#{{_id}}">{{name}}</a>{{#if abv}}<span class="display__abv">{{abv}}</span>{{/if}}</h2>
                             <ul class="display__data">{{#if type}}<li class="display__data__type">{{type}}</li>{{/if}}{{#with getBJCPSubcategory bjcpSubcategory}}<li class="display__data__subcategory">{{name}}</li>{{/with}}</ul>
                         {{/with}}
                     {{ else }}
@@ -25,4 +16,40 @@
             </li>
         {{/each}}
     </ul>
+
+    <ul class="bev-details">
+        {{#each taps _id}}
+            {{#if onTap}}
+                {{#with whatsOnTap onTap}}
+                    <li id="bev--{{_id}}" class="bev-details__bev">
+                        <div class="bev-details__container">
+                        <h3 class="bev-details__name">{{name}}</h3>
+                        <div class="bev-details__info">
+                            <ul>
+                                {{#if type}}<li>{{type}}</li>{{/if}}
+                                {{#if bjcpSubcategory}}{{#with getBJCPSubcategory bjcpSubcategory}}<li>{{name}}</li>{{/with}}{{/if}}
+                                {{#if abv}}<li>{{abv}}</li>{{/if}}
+                                {{#if ibu}}<li>{{ibu}} IBUs</li>{{/if}}
+                                {{#if og}}<li>OG: {{og}}</li>{{/if}}
+                                {{#if fg}}<li>FG: {{fg}}</li>{{/if}}
+                            </ul>
+                            {{#if notes}}<p>{{notes}}</p>{{/if}}
+                        </div>
+                    </div>
+                </li>
+                {{/with}}
+
+            {{/if}}
+        {{/each}}
+    </ul>
+
+    <style>
+        .display--landscape .display__tap {
+            flex-basis: {{flexBasis _id}}%;
+        }
+
+        .display--portrait .display__tap {
+            height: {{flexBasis _id}}vh;
+        }
+    </style>
 </template>

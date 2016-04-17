@@ -75,6 +75,7 @@ function buildBevObj() {
     var bevIBU = $('#ibu').val();
     var bevOG = $('#og').val();
     var bevFG = $('#fg').val();
+    var bevNotes = $('#notes').val();
     var brewDate = $('#brew-date').val();
     var bornOn = $('#born-on').val();
 
@@ -88,6 +89,7 @@ function buildBevObj() {
                 'ibu' : bevIBU,
                 'og' : bevOG,
                 'fg' : bevFG,
+                'notes' : bevNotes,
                 'brewDate' : brewDate,
                 'bornOn' : bornOn,
             };
